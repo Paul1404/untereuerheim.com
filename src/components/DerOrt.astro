@@ -1,9 +1,19 @@
 ---
-// To add a photo here later: import an image from `~/assets/images/` and pass
-// it to <Figure src={img} alt="..." caption="Blick über den Main" />.
+import Figure from "./Figure.astro";
+import luftbild from "../assets/images/luftbild-untereuerheim.jpg";
+import mainsteg from "../assets/images/mainsteg-untereuerheim.jpg";
 ---
 <section id="der-ort" class="relative scroll-mt-24 py-28 sm:py-36">
   <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <div class="reveal mb-20 sm:mb-28">
+      <Figure
+        src={luftbild}
+        alt="Luftbild von Untereuerheim mit dem Kirchturm von St. Gallus, im Hintergrund der Main."
+        caption="Untereuerheim am rechten Ufer des Mains."
+        aspect="16 / 9"
+      />
+    </div>
+
     <div class="grid grid-cols-1 items-start gap-14 lg:grid-cols-12 lg:gap-20">
       <div class="reveal lg:col-span-5 lg:sticky lg:top-28">
         <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
@@ -25,6 +35,15 @@
           <p class="font-sans text-[15px] not-italic leading-relaxed text-[color:var(--color-muted)]">
             Landkreis Schweinfurt, Regierungsbezirk Unterfranken, Freistaat Bayern. Ortsteil der Gemeinde Grettstadt seit dem 1. Mai 1978.
           </p>
+        </div>
+
+        <div class="reveal mt-14">
+          <Figure
+            src={mainsteg}
+            alt="Der Mainsteg bei Untereuerheim, eine schlanke Bogenbrücke über den Main."
+            caption="Der Mainsteg, die Verbindung über den Fluss."
+            aspect="3 / 2"
+          />
         </div>
       </div>
     </div>

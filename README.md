@@ -1,60 +1,72 @@
 # untereuerheim.com
 
-The village website for Untereuerheim, a Kirchdorf of around four hundred people on the Main in Lower Franconia.
+Die Website für Untereuerheim, Ortsteil von Grettstadt im Landkreis Schweinfurt.
 
 ## Stack
 
-- Astro 6 with View Transitions, Content Collections, and image optimization
-- Tailwind CSS v4
-- Bun runtime
-- Node adapter for SSR plus prerendered home page
-- Railway via Dockerfile
+Astro 6, Tailwind v4, Bun, Node-Adapter, Railway via Dockerfile.
 
-## Local development
+## Lokal starten
 
 ```bash
 bun install
 bun run dev
 ```
 
-Open http://localhost:4321.
+Läuft dann auf http://localhost:4321.
 
-## Build and run
+## Bauen und ausliefern
 
 ```bash
 bun run build
 node dist/server/entry.mjs
 ```
 
-## Favicon set
+Der Server bindet an `process.env.HOST` (Standard `0.0.0.0` im Container) und `process.env.PORT` (Standard 4321). Railway setzt `PORT` automatisch, also nichts weiter zu tun.
 
-The SVG in `public/favicon.svg` is the source of truth. Generate every PNG and the ICO from it:
+## Favicons
+
+`public/favicon.svg` ist die Quelle. Alle PNGs, die ICO und das Manifest werden daraus erzeugt:
 
 ```bash
 bun run icons
 ```
 
-## Adding a Chronik entry
+## Chronik-Eintrag hinzufügen
 
-Drop a Markdown file into `src/content/chronik/`. Frontmatter:
+Eine Markdown-Datei in `src/content/chronik/` ablegen:
 
 ```yaml
 ---
 year: 1880
 sortKey: 1880
 title: Kurze Überschrift
-description: Ein Satz, der das Ereignis beschreibt.
+description: Ein Satz, der beschreibt, was passiert ist.
 ---
 ```
 
-`sortKey` is a numeric sort field, so entries like `"16. Jh."` can still be placed correctly on the timeline.
+`sortKey` ist eine Zahl. Damit lassen sich auch unscharfe Jahreszahlen wie `"16. Jh."` an die richtige Stelle der Zeitleiste sortieren.
 
-## Deployment
+## Deployment auf Railway
 
-Railway. The platform detects `Dockerfile` automatically. `railway.toml` wires up the `/health` healthcheck. Set the domain in the Railway dashboard.
+Railway erkennt das `Dockerfile` und baut damit. Der Healthcheck steht in `railway.toml` und zeigt auf `/health`. Domain im Railway-Dashboard verbinden.
 
-See `.env.example` for environment variables.
+Umgebungsvariablen siehe `.env.example`.
 
-## Health
+## Health-Endpoint
 
-`GET /health` returns `{"status":"ok"}` with HTTP 200.
+`GET /health` liefert `{"status":"ok"}` mit HTTP 200.
+
+## Inhalt pflegen
+
+Wer Texte ändern will, findet sie hier:
+
+- Hero und Tagline: `src/components/Hero.astro`
+- Der Ort: `src/components/DerOrt.astro`
+- Chronik: `src/content/chronik/*.md`
+- Vereine und Institutionen: `src/components/Institutionen.astro`
+- Fußzeile: `src/components/Footer.astro`
+
+## Quellen
+
+Die Chronik stützt sich auf die Angaben der Gemeinde Grettstadt, des Bistums Würzburg und der gängigen Lexika. Wer einen Fehler findet, soll ihn bitte melden.

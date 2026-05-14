@@ -1,0 +1,34 @@
+---
+interface Props {
+  label?: string;
+  aspect?: string;
+  variant?: "morning" | "field" | "river";
+  class?: string;
+}
+
+const { label, aspect = "16 / 9", variant = "morning", class: className = "" } = Astro.props;
+
+const gradients: Record<NonNullable<Props["variant"]>, string> = {
+  morning:
+    "linear-gradient(135deg, #f3e6cf 0%, #e7c9a4 38%, #b48a5e 70%, #7d5a35 100%)",
+  field:
+    "linear-gradient(160deg, #f5ecd5 0%, #d9c089 45%, #8a7140 100%)",
+  river:
+    "linear-gradient(150deg, #f1ead8 0%, #c8a878 40%, #6b5436 100%)",
+};
+---
+<div
+  class={`placeholder relative w-full overflow-hidden rounded-2xl ring-1 ring-[color:var(--color-line-strong)] shadow-[var(--shadow-soft)] ${className}`}
+  style={`aspect-ratio: ${aspect}; background: ${gradients[variant]};`}
+  aria-hidden={label ? undefined : "true"}
+>
+  <div class="absolute inset-0 mix-blend-soft-light opacity-50"
+    style="background-image: url(&quot;data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>&quot;);">
+  </div>
+  <div class="absolute inset-0" style="background: radial-gradient(120% 80% at 20% 10%, rgba(255,255,255,0.35), transparent 55%), radial-gradient(120% 80% at 90% 100%, rgba(0,0,0,0.18), transparent 60%);"></div>
+  {label && (
+    <span class="absolute bottom-3 right-4 font-sans text-[11px] uppercase tracking-[0.18em] text-white/80">
+      {label}
+    </span>
+  )}
+</div>

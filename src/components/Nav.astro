@@ -1,0 +1,32 @@
+---
+const links = [
+  { href: "#der-ort", label: "Der Ort" },
+  { href: "#chronik", label: "Chronik" },
+  { href: "#institutionen", label: "Institutionen" },
+];
+---
+<header class="fixed inset-x-0 top-0 z-40">
+  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8 sm:py-5">
+    <a href="#hauptinhalt" class="group flex items-center gap-2 text-[color:var(--color-ink)]">
+      <span class="inline-flex h-7 w-7 items-center justify-center rounded-md bg-[color:var(--color-sandstone)]/95 text-[color:var(--color-paper)] shadow-[var(--shadow-soft)]">
+        <svg width="14" height="14" viewBox="0 0 64 64" fill="currentColor" aria-hidden="true">
+          <rect x="31.1" y="6" width="1.8" height="9" rx="0.5"/>
+          <rect x="28.5" y="8.6" width="7" height="1.8" rx="0.5"/>
+          <path d="M32 14.5 L41.5 28 L22.5 28 Z"/>
+          <rect x="24" y="28" width="16" height="26"/>
+        </svg>
+      </span>
+      <span class="font-serif text-[15px] tracking-wide">Untereuerheim</span>
+    </a>
+    <nav aria-label="Hauptnavigation" class="hidden md:block">
+      <ul class="flex items-center gap-7 text-[13px] tracking-wide text-[color:var(--color-ink-soft)]">
+        {links.map((l) => (
+          <li>
+            <a href={l.href} class="link-underline transition-colors hover:text-[color:var(--color-sandstone)]">{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+  <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-[color:var(--color-paper)]/95 via-[color:var(--color-paper)]/80 to-transparent backdrop-blur-[2px]"></div>
+</header>

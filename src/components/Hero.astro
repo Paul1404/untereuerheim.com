@@ -1,0 +1,59 @@
+---
+import PlaceholderImage from "./PlaceholderImage.astro";
+---
+<section class="relative isolate overflow-hidden">
+  <div class="absolute inset-0 -z-10">
+    <PlaceholderImage variant="morning" aspect="16 / 9" class="!rounded-none h-full" />
+    <div class="absolute inset-0 bg-gradient-to-b from-[color:var(--color-paper)]/40 via-[color:var(--color-paper)]/30 to-[color:var(--color-paper)]"></div>
+  </div>
+
+  <div class="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-between px-6 pt-32 pb-12 sm:px-8 sm:pt-40 sm:pb-16">
+    <div class="reveal max-w-3xl">
+      <p class="mb-5 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
+        <span class="h-px w-8 bg-[color:var(--color-line-strong)]"></span>
+        Erstmals erwähnt 880
+      </p>
+      <h1 class="font-serif text-[clamp(3.25rem,9vw,7.5rem)] leading-[0.95] tracking-[-0.02em] text-[color:var(--color-ink)]">
+        Untereuer<span class="italic text-[color:var(--color-sandstone)]">heim</span>
+      </h1>
+      <p class="mt-8 max-w-xl text-balance font-serif text-[clamp(1.25rem,2.1vw,1.6rem)] italic leading-snug text-[color:var(--color-ink-soft)]">
+        Tausend Jahre am Main, zwischen Sandstein, Feldern und Glockenschlag.
+      </p>
+      <p class="mt-5 max-w-lg text-[15px] leading-relaxed text-[color:var(--color-muted)]">
+        Ein Kirchdorf im unterfränkischen Schweinfurter Land. Rund vierhundert Menschen, eine Kirche, eine Mühle, ein Fluss. Die Geschichte ist alt, das Leben heute.
+      </p>
+    </div>
+
+    <div class="reveal mt-16 flex items-end justify-between gap-6">
+      <dl class="grid grid-cols-2 gap-x-10 gap-y-3 text-[13px] sm:grid-cols-3">
+        <div>
+          <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Lage</dt>
+          <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">Am Main</dd>
+        </div>
+        <div>
+          <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Einwohner</dt>
+          <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">~ 400</dd>
+        </div>
+        <div class="hidden sm:block">
+          <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Landkreis</dt>
+          <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">Schweinfurt</dd>
+        </div>
+      </dl>
+
+      <a href="#der-ort" class="group flex flex-col items-center gap-3 text-[11px] uppercase tracking-[0.24em] text-[color:var(--color-muted)] transition-colors hover:text-[color:var(--color-sandstone)]" aria-label="Weiter zum Inhalt">
+        <span class="hidden sm:inline">Hinab</span>
+        <span class="block h-12 w-px bg-[color:var(--color-line-strong)] transition-all group-hover:bg-[color:var(--color-sandstone)]">
+          <span class="block h-3 w-px translate-y-0 animate-[scroll-hint_2.2s_ease-in-out_infinite] bg-[color:var(--color-sandstone)]"></span>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scroll-hint {
+    0%   { transform: translateY(-12px); opacity: 0; }
+    50%  { opacity: 1; }
+    100% { transform: translateY(48px); opacity: 0; }
+  }
+</style>

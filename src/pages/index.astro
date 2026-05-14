@@ -1,0 +1,24 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import DerOrt from "../components/DerOrt.astro";
+import Chronik from "../components/Chronik.astro";
+import Institutionen from "../components/Institutionen.astro";
+import Footer from "../components/Footer.astro";
+
+export const prerender = true;
+---
+<Base>
+  <Nav />
+  <main id="hauptinhalt">
+    <Hero />
+    <div class="section-rule mx-auto max-w-6xl"></div>
+    <DerOrt />
+    <div class="section-rule mx-auto max-w-6xl"></div>
+    <Chronik />
+    <div class="section-rule mx-auto max-w-6xl"></div>
+    <Institutionen />
+  </main>
+  <Footer />
+</Base>

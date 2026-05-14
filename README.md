@@ -67,6 +67,25 @@ Wer Texte ändern will, findet sie hier:
 - Vereine und Institutionen: `src/components/Institutionen.astro`
 - Fußzeile: `src/components/Footer.astro`
 
+## Bilder hinzufügen
+
+Echte Fotos kommen nach `src/assets/images/`. Astro optimiert sie beim Build (WebP, mehrere Größen, Lazy Loading). Vorgehen:
+
+1. Datei nach `src/assets/images/` legen, zum Beispiel `main-blick.jpg`.
+2. In dem Astro-Komponentenfile, in dem das Bild erscheinen soll, importieren und in `<Figure>` einsetzen:
+
+   ```astro
+   ---
+   import Figure from "~/components/Figure.astro";
+   import mainBlick from "~/assets/images/main-blick.jpg";
+   ---
+   <Figure src={mainBlick} alt="Blick über den Main bei Untereuerheim" caption="Main, Höhe Untereuerheim" aspect="3 / 2" />
+   ```
+
+Ohne `src` rendert `<Figure>` nur einen ruhigen Platzhalter in der Hintergrundfarbe. Mit `src` wird die volle `astro:assets`-Pipeline genutzt.
+
+Für ein Hero-Hintergrundbild: Bild importieren und als `<Image>` mit `position: absolute; inset: 0; object-fit: cover` als untere Ebene unter den Hero-Text legen.
+
 ## Quellen
 
 Die Chronik stützt sich auf die Angaben der Gemeinde Grettstadt, des Bistums Würzburg und der gängigen Lexika. Wer einen Fehler findet, soll ihn bitte melden.

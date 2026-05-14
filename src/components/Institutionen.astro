@@ -1,0 +1,102 @@
+---
+type Inst = {
+  name: string;
+  meta: string;
+  description: string;
+  href: string;
+  hrefLabel: string;
+  icon: "ball" | "mill" | "church";
+};
+
+const institutionen: Inst[] = [
+  {
+    name: "SV 1945 Untereuerheim",
+    meta: "Sportverein. Gegründet 1945.",
+    description: "Der Verein, in dem das Dorf zusammenkommt. Fußball, Gymnastik, Stammtisch, Sommerfest.",
+    href: "https://sv-untereuerheim.de",
+    hrefLabel: "sv-untereuerheim.de",
+    icon: "ball",
+  },
+  {
+    name: "Schlossmühle Untereuerheim",
+    meta: "In Betrieb seit dem 16. Jahrhundert.",
+    description: "Eine der ältesten arbeitenden Mühlen der Region. Mehl, Schrot, regionale Erzeugnisse direkt ab Hof.",
+    href: "https://schlossmuehle-untereuerheim.de",
+    hrefLabel: "schlossmuehle-untereuerheim.de",
+    icon: "mill",
+  },
+  {
+    name: "Pfarrei St. Gallus",
+    meta: "Bistum Würzburg.",
+    description: "Die Pfarrei mit Kirche aus dem 16. Jahrhundert. Gottesdienste, Wallfahrt nach Dettelbach, das ganze kirchliche Jahr.",
+    href: "https://st-gallus-st-laurentius.com",
+    hrefLabel: "st-gallus-st-laurentius.com",
+    icon: "church",
+  },
+];
+---
+<section id="institutionen" class="relative scroll-mt-24 py-28 sm:py-36">
+  <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <div class="reveal mx-auto max-w-3xl text-center">
+      <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
+        Drei. Institutionen
+      </p>
+      <h2 class="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl">
+        Was das Dorf trägt.
+      </h2>
+      <p class="mt-5 font-serif text-lg italic text-[color:var(--color-ink-soft)]">
+        Drei Orte, an denen sich Untereuerheim jeden Tag aufs Neue ereignet.
+      </p>
+    </div>
+
+    <div class="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
+      {institutionen.map((inst) => (
+        <a
+          href={inst.href}
+          rel="external noopener"
+          target="_blank"
+          class="reveal group relative flex flex-col rounded-2xl bg-[color:var(--color-paper-2)]/85 p-7 ring-1 ring-[color:var(--color-line)] transition-all duration-500 hover:-translate-y-1 hover:bg-[color:var(--color-paper-2)] hover:shadow-[var(--shadow-soft)] hover:ring-[color:var(--color-line-strong)]"
+        >
+          <span class="mb-6 inline-flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--color-sandstone)]/10 text-[color:var(--color-sandstone)] ring-1 ring-[color:var(--color-sandstone)]/20">
+            {inst.icon === "ball" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M5.6 18.4 18.4 5.6"/>
+              </svg>
+            )}
+            {inst.icon === "mill" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 13V3"/>
+                <path d="M12 13 4 8"/>
+                <path d="M12 13 20 8"/>
+                <path d="M12 13 8 21h8z"/>
+                <circle cx="12" cy="13" r="1.2"/>
+              </svg>
+            )}
+            {inst.icon === "church" && (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 3v4"/>
+                <path d="M10 5h4"/>
+                <path d="m12 7 4 4v10H8V11z"/>
+                <path d="M16 14h3v7h-3"/>
+                <path d="M8 14H5v7h3"/>
+              </svg>
+            )}
+          </span>
+
+          <h3 class="font-serif text-2xl leading-tight">{inst.name}</h3>
+          <p class="mt-2 text-[12px] uppercase tracking-[0.18em] text-[color:var(--color-muted)]">{inst.meta}</p>
+          <p class="mt-5 text-[15px] leading-relaxed text-[color:var(--color-ink-soft)]">{inst.description}</p>
+
+          <span class="mt-8 inline-flex items-center gap-2 text-[13px] text-[color:var(--color-sandstone)]">
+            <span class="link-underline">{inst.hrefLabel}</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+              <path d="M7 17 17 7"/>
+              <path d="M8 7h9v9"/>
+            </svg>
+          </span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

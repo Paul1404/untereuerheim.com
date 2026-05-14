@@ -1,0 +1,45 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src?: ImageMetadata;
+  alt?: string;
+  caption?: string;
+  aspect?: string;
+  class?: string;
+}
+
+const {
+  src,
+  alt = "",
+  caption,
+  aspect = "3 / 2",
+  class: className = "",
+} = Astro.props;
+---
+<figure class={`relative ${className}`}>
+  <div
+    class="relative w-full overflow-hidden rounded-2xl ring-1 ring-[color:var(--color-line-strong)]"
+    style={`aspect-ratio: ${aspect};`}
+  >
+    {src ? (
+      <Image
+        src={src}
+        alt={alt}
+        widths={[640, 960, 1280, 1920]}
+        sizes="(min-width: 1024px) 720px, 100vw"
+        loading="lazy"
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+    ) : (
+      <div class="absolute inset-0 bg-[color:var(--color-paper-2)]"></div>
+    )}
+  </div>
+  {caption && (
+    <figcaption class="mt-3 text-[12px] tracking-wide text-[color:var(--color-muted)]">
+      {caption}
+    </figcaption>
+  )}
+</figure>

@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
 import cormorant500 from "@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2?url";
 import cormorant500Italic from "@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2?url";
 
@@ -164,8 +163,6 @@ const jsonLd = {
     {isHome && (
       <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     )}
-
-    <ClientRouter />
   </head>
   <body class="min-h-screen antialiased">
     <a
@@ -177,12 +174,10 @@ const jsonLd = {
     <slot />
 
     <script>
-      const observe = () => {
-        const items = document.querySelectorAll<HTMLElement>(".reveal");
-        if (!("IntersectionObserver" in window)) {
-          items.forEach((el) => el.classList.add("is-visible"));
-          return;
-        }
+      const items = document.querySelectorAll<HTMLElement>(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        items.forEach((el) => el.classList.add("is-visible"));
+      } else {
         const io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
@@ -195,9 +190,7 @@ const jsonLd = {
           { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
         );
         items.forEach((el) => io.observe(el));
-      };
-      observe();
-      document.addEventListener("astro:after-swap", observe);
+      }
     </script>
   </body>
 </html>

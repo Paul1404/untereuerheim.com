@@ -7,6 +7,13 @@ import wallfahrtInnen from "../assets/images/wallfahrtskirche-maria-im-sand-inne
 const entries = (await getCollection("chronik")).sort(
   (a, b) => a.data.sortKey - b.data.sortKey,
 );
+
+const parseYear = (raw: string | number) => {
+  const s = String(raw);
+  const m = s.match(/^(\D*)(\d+)(\D*)$/);
+  if (m) return { prefix: m[1], num: m[2], suffix: m[3] };
+  return { prefix: s, num: null as string | null, suffix: "" };
+};
 ---
 <section id="chronik" class="relative scroll-mt-24 py-28 sm:py-36">
   <div class="mx-auto max-w-6xl px-6 sm:px-8">
@@ -22,28 +29,35 @@ const entries = (await getCollection("chronik")).sort(
       </p>
     </div>
 
-    <ol class="relative mt-20 sm:mt-28">
-      <div
-        aria-hidden="true"
-        class="pointer-events-none absolute top-0 bottom-0 left-6 w-px bg-gradient-to-b from-transparent via-[color:var(--color-line-strong)] to-transparent sm:left-1/2 sm:-translate-x-1/2"
-      ></div>
+    <ol class="chronik-list relative mt-20 sm:mt-28" data-chronik-list>
+      <div aria-hidden="true" class="chronik-rail">
+        <div class="chronik-rail-track"></div>
+        <div class="chronik-rail-fill"></div>
+      </div>
 
       {entries.map((entry, i) => {
         const left = i % 2 === 0;
+        const year = parseYear(entry.data.year);
         return (
-          <li class="reveal relative mb-16 sm:mb-24 last:mb-0">
+          <li class="reveal chronik-entry relative mb-16 sm:mb-24 last:mb-0">
             <span
               aria-hidden="true"
-              class="absolute left-6 top-3 -translate-x-1/2 sm:left-1/2"
+              class="chronik-dot-wrap absolute left-6 top-3 -translate-x-1/2 sm:left-1/2"
             >
-              <span class="block h-2.5 w-2.5 rounded-full bg-[color:var(--color-sandstone)] ring-4 ring-[color:var(--color-paper)] shadow-[0_0_0_1px_var(--color-line-strong)]"></span>
+              <span class="chronik-dot block h-2.5 w-2.5 rounded-full"></span>
             </span>
 
             <div class={`grid grid-cols-1 gap-x-12 sm:grid-cols-2 ${left ? "" : "sm:[&>*:first-child]:order-2"}`}>
               <div class={`pl-14 sm:pl-0 ${left ? "sm:pr-12 sm:text-right" : "sm:pl-12 sm:text-left"}`}>
                 <div class={`inline-flex flex-col ${left ? "sm:items-end" : "sm:items-start"} items-start`}>
-                  <span class="font-serif text-[clamp(2.75rem,5.5vw,4.25rem)] leading-none tracking-tight text-[color:var(--color-sandstone)]">
-                    {entry.data.year}
+                  <span class="chronik-year font-serif text-[clamp(2.75rem,5.5vw,4.25rem)] leading-none tracking-tight text-[color:var(--color-sandstone)]">
+                    {year.num !== null ? (
+                      <Fragment>
+                        {year.prefix}<span class="chronik-year-num" data-target={year.num}>{year.num}</span>{year.suffix}
+                      </Fragment>
+                    ) : (
+                      year.prefix
+                    )}
                   </span>
                   <span class={`mt-2 h-px w-12 bg-[color:var(--color-line-strong)] ${left ? "sm:ml-auto" : ""}`}></span>
                 </div>
@@ -112,3 +126,189 @@ const entries = (await getCollection("chronik")).sort(
     </div>
   </div>
 </section>
+
+<style>
+  .chronik-rail {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 1.5rem;
+    width: 1px;
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+            mask-image: linear-gradient(to bottom, transparent 0%, black 6%, black 94%, transparent 100%);
+  }
+
+  @media (min-width: 640px) {
+    .chronik-rail {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+  .chronik-rail-track {
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-line-strong);
+    opacity: 0.7;
+  }
+
+  .chronik-rail-fill {
+    position: absolute;
+    inset: 0;
+    transform-origin: top;
+    transform: scaleY(var(--progress, 0));
+    background-color: var(--color-sandstone);
+    transition: transform 140ms linear;
+    will-change: transform;
+  }
+
+  .chronik-dot {
+    position: relative;
+    background-color: var(--color-paper);
+    box-shadow:
+      0 0 0 1px var(--color-line-strong),
+      0 0 0 4px var(--color-paper);
+    transform: scale(0.85);
+    transition:
+      background-color 700ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      box-shadow 700ms cubic-bezier(0.2, 0.6, 0.2, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .chronik-dot::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 9999px;
+    border: 1px solid var(--color-sandstone);
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.6);
+  }
+
+  .reveal.is-visible .chronik-dot {
+    background-color: var(--color-sandstone);
+    box-shadow:
+      0 0 0 1px var(--color-sandstone),
+      0 0 0 4px var(--color-paper);
+    transform: scale(1);
+  }
+
+  .reveal.is-visible .chronik-dot::after {
+    animation: chronik-ping 1400ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes chronik-ping {
+    0%   { opacity: 0.55; transform: scale(0.7); }
+    100% { opacity: 0;    transform: scale(3.6); }
+  }
+
+  .chronik-year-num {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .chronik-rail-fill {
+      transform: scaleY(1) !important;
+      transition: none;
+    }
+    .chronik-dot {
+      background-color: var(--color-sandstone);
+      box-shadow:
+        0 0 0 1px var(--color-sandstone),
+        0 0 0 4px var(--color-paper);
+      transform: scale(1);
+      transition: none;
+    }
+    .chronik-dot::after {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  const setup = () => {
+    const list = document.querySelector<HTMLElement>("[data-chronik-list]");
+    if (!list) return;
+    const fill = list.querySelector<HTMLElement>(".chronik-rail-fill");
+    if (!fill) return;
+
+    const reduced =
+      typeof window.matchMedia === "function" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const yearEls = list.querySelectorAll<HTMLElement>(".chronik-year-num");
+    const counted = new WeakSet<Element>();
+
+    const animateNum = (el: HTMLElement, target: number) => {
+      counted.add(el);
+      if (reduced) {
+        el.textContent = String(target);
+        return;
+      }
+      const duration = 1500;
+      const startVal = Math.max(0, target - 220);
+      const startTime = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - t, 3);
+        const v = Math.round(startVal + (target - startVal) * eased);
+        el.textContent = String(v);
+        if (t < 1) requestAnimationFrame(step);
+        else el.textContent = String(target);
+      };
+      requestAnimationFrame(step);
+    };
+
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver(
+        (obs) => {
+          for (const entry of obs) {
+            if (entry.isIntersecting && !counted.has(entry.target)) {
+              const el = entry.target as HTMLElement;
+              const target = Number(el.dataset.target);
+              if (Number.isFinite(target) && target >= 100) animateNum(el, target);
+              io.unobserve(el);
+            }
+          }
+        },
+        { threshold: 0.45, rootMargin: "0px 0px -10% 0px" },
+      );
+      yearEls.forEach((el) => io.observe(el));
+    } else {
+      yearEls.forEach((el) => {
+        const t = Number(el.dataset.target);
+        if (Number.isFinite(t)) el.textContent = String(t);
+      });
+    }
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = list.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const anchor = vh * 0.6;
+      const drawn = anchor - rect.top;
+      const progress = Math.max(0, Math.min(1, drawn / Math.max(1, rect.height)));
+      fill.style.setProperty("--progress", String(progress));
+    };
+
+    const schedule = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(update);
+    };
+
+    if (reduced) {
+      fill.style.setProperty("--progress", "1");
+    } else {
+      window.addEventListener("scroll", schedule, { passive: true });
+      window.addEventListener("resize", schedule, { passive: true });
+      update();
+    }
+  };
+
+  setup();
+  document.addEventListener("astro:after-swap", setup);
+</script>

@@ -1,7 +1,8 @@
 ---
 import Figure from "./Figure.astro";
 import luftbild from "../assets/images/luftbild-untereuerheim.jpg";
-import mainsteg from "../assets/images/mainsteg-untereuerheim.jpg";
+import historisch from "../assets/images/u-heim-historisch.png";
+import stufenlinde from "../assets/images/stufenlinde-uheim.jpg";
 ---
 <section id="der-ort" class="relative scroll-mt-24 py-28 sm:py-36">
   <div class="mx-auto max-w-6xl px-6 sm:px-8">
@@ -37,11 +38,20 @@ import mainsteg from "../assets/images/mainsteg-untereuerheim.jpg";
           </p>
         </div>
 
+        <div class="reveal mt-12">
+          <Figure
+            src={historisch}
+            alt="Vierteilige historische Ansichtskarte mit alten Aufnahmen von Untereuerheim."
+            caption="Historische Ansichten von Untereuerheim."
+            aspect="3 / 2"
+          />
+        </div>
+
         <div class="reveal mt-14">
           <Figure
-            src={mainsteg}
-            alt="Der Mainsteg bei Untereuerheim, eine schlanke Bogenbrücke über den Main."
-            caption="Der Mainsteg bei Untereuerheim."
+            src={stufenlinde}
+            alt="Die Stufenlinde im Ortskern von Untereuerheim, eine in mehreren Etagen gezogene Linde, daneben ein Wegkreuz."
+            caption="Stufenlinde im Ortskern. Foto: baumkunde.de."
             aspect="3 / 2"
           />
         </div>

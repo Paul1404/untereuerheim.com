@@ -1,18 +1,120 @@
 ---
 import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
+import cormorant500 from "@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2?url";
+import cormorant500Italic from "@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2?url";
 
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
 }
 
 const {
   title = "Untereuerheim. Ortsteil von Grettstadt im Landkreis Schweinfurt.",
   description = "Untereuerheim ist ein Ortsteil von Grettstadt im Landkreis Schweinfurt, am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals erwähnt um 800.",
+  image = "/og.jpg",
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).toString();
+const siteOrigin = Astro.site ?? new URL("/", Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, siteOrigin).toString();
+const ogImage = new URL(image, siteOrigin).toString();
+
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "";
+
+const placeId = new URL("#untereuerheim", siteOrigin).toString();
+const websiteId = new URL("#website", siteOrigin).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": websiteId,
+      url: siteOrigin.toString(),
+      name: "Untereuerheim",
+      inLanguage: "de-DE",
+      description,
+      publisher: { "@id": placeId },
+    },
+    {
+      "@type": "Place",
+      "@id": placeId,
+      name: "Untereuerheim",
+      alternateName: "Ortsteil Untereuerheim",
+      description:
+        "Untereuerheim ist ein Ortsteil der Gemeinde Grettstadt im Landkreis Schweinfurt in Unterfranken, Bayern. Der Ort liegt am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um 800.",
+      url: siteOrigin.toString(),
+      image: ogImage,
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 50.01344,
+        longitude: 10.35615,
+      },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Grettstadt",
+        addressRegion: "BY",
+        postalCode: "97508",
+        addressCountry: "DE",
+      },
+      containedInPlace: {
+        "@type": "AdministrativeArea",
+        name: "Grettstadt",
+        address: {
+          "@type": "PostalAddress",
+          postalCode: "97508",
+          addressRegion: "BY",
+          addressCountry: "DE",
+        },
+        containedInPlace: {
+          "@type": "AdministrativeArea",
+          name: "Landkreis Schweinfurt",
+          address: {
+            "@type": "PostalAddress",
+            addressRegion: "BY",
+            addressCountry: "DE",
+          },
+        },
+      },
+      sameAs: ["https://de.wikipedia.org/wiki/Untereuerheim"],
+    },
+    {
+      "@type": "SportsOrganization",
+      "@id": new URL("#sv", siteOrigin).toString(),
+      name: "SV 1945 Untereuerheim",
+      foundingDate: "1945",
+      url: "https://sv-untereuerheim.de",
+      areaServed: { "@id": placeId },
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": new URL("#schlossmuehle", siteOrigin).toString(),
+      name: "Schlossmühle Untereuerheim",
+      description:
+        "Mühle in Betrieb seit dem 16. Jahrhundert. Verkauf von Mehl, Schrot und regionalen Erzeugnissen.",
+      url: "https://schlossmuehle-untereuerheim.de",
+      containedInPlace: { "@id": placeId },
+    },
+    {
+      "@type": "Church",
+      "@id": new URL("#st-gallus", siteOrigin).toString(),
+      name: "Pfarrei St. Gallus",
+      description:
+        "Pfarrei und Kirche St. Gallus in Untereuerheim, Bistum Würzburg. Kirchturm aus der Echter-Zeit, Taufstein von 1592.",
+      url: "https://st-gallus-st-laurentius.com",
+      containedInPlace: { "@id": placeId },
+    },
+    {
+      "@type": "Organization",
+      "@id": new URL("#mainbrueckenverein", siteOrigin).toString(),
+      name: "Mainbrückenverein Untereuerheim",
+      description:
+        "Trägerverein des Mainstegs zwischen Untereuerheim und Obereuerheim.",
+      url: "https://www.mainbrueckenvereinuntereuerheim.de",
+      areaServed: { "@id": placeId },
+    },
+  ],
+};
 ---
 <!doctype html>
 <html lang="de">
@@ -32,14 +134,35 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).to
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#faf8f5" />
 
+    <link rel="preload" href={cormorant500} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={cormorant500Italic} as="font" type="font/woff2" crossorigin />
+
+    <meta name="geo.region" content="DE-BY" />
+    <meta name="geo.placename" content="Untereuerheim, Grettstadt" />
+    <meta name="geo.position" content="50.01344;10.35615" />
+    <meta name="ICBM" content="50.01344, 10.35615" />
+
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Untereuerheim" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="de_DE" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Luftbild von Untereuerheim am rechten Mainufer mit der Pfarrkirche St. Gallus." />
 
-    <ClientRouter />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Luftbild von Untereuerheim am rechten Mainufer mit der Pfarrkirche St. Gallus." />
+
+    {isHome && (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
   </head>
   <body class="min-h-screen antialiased">
     <a
@@ -51,12 +174,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).to
     <slot />
 
     <script>
-      const observe = () => {
-        const items = document.querySelectorAll<HTMLElement>(".reveal");
-        if (!("IntersectionObserver" in window)) {
-          items.forEach((el) => el.classList.add("is-visible"));
-          return;
-        }
+      const items = document.querySelectorAll<HTMLElement>(".reveal");
+      if (!("IntersectionObserver" in window)) {
+        items.forEach((el) => el.classList.add("is-visible"));
+      } else {
         const io = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
@@ -69,9 +190,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).to
           { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
         );
         items.forEach((el) => io.observe(el));
-      };
-      observe();
-      document.addEventListener("astro:after-swap", observe);
+      }
     </script>
   </body>
 </html>

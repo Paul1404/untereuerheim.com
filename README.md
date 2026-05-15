@@ -4,7 +4,7 @@ Die Website für Untereuerheim, Ortsteil von Grettstadt im Landkreis Schweinfurt
 
 ## Stack
 
-Astro 6, Tailwind v4, Bun, Node-Adapter, Railway via Dockerfile.
+Astro 6 (static), Tailwind v4, Bun. Deploy auf Railway über Dockerfile, ausgeliefert von einem schlanken Bun-Static-Server.
 
 ## Lokal starten
 
@@ -19,18 +19,22 @@ Läuft dann auf http://localhost:4321.
 
 ```bash
 bun run build
-node dist/server/entry.mjs
+bun run server.ts
 ```
 
-Der Server bindet an `process.env.HOST` (Standard `0.0.0.0` im Container) und `process.env.PORT` (Standard 4321). Railway setzt `PORT` automatisch, also nichts weiter zu tun.
+`server.ts` ist ein Bun-Static-Server. Bindet an `process.env.HOST` (Default `0.0.0.0`) und `process.env.PORT` (Default `4321`). Railway setzt `PORT` automatisch.
 
-## Favicons
+## Skripte
 
-`public/favicon.svg` ist die Quelle. Alle PNGs, die ICO und das Manifest werden daraus erzeugt:
-
-```bash
-bun run icons
-```
+| Befehl | Zweck |
+|---|---|
+| `bun run dev` | Astro Dev-Server mit HMR |
+| `bun run build` | Statischer Build nach `dist/` |
+| `bun run start` | Bun-Static-Server (`server.ts`) |
+| `bun run check` | TypeScript- und Astro-Check |
+| `bun run icons` | Favicons aus `public/favicon.svg` erzeugen |
+| `bun run og` | OG-Bild `public/og.jpg` (1200x630) aus dem Luftbild erzeugen |
+| `bun run optimize-images` | Quellbilder in `src/assets/images/` auf 2500 px / Q82 kappen |
 
 ## Chronik-Eintrag hinzufügen
 
@@ -42,50 +46,37 @@ year: 1880
 sortKey: 1880
 title: Kurze Überschrift
 description: Ein Satz, der beschreibt, was passiert ist.
+image: "../../assets/images/optional-foto.jpg"
+imageAlt: "Alt-Text für das Bild."
 ---
 ```
 
-`sortKey` ist eine Zahl. Damit lassen sich auch unscharfe Jahreszahlen wie `"16. Jh."` an die richtige Stelle der Zeitleiste sortieren.
-
-## Deployment auf Railway
-
-Railway erkennt das `Dockerfile` und baut damit. Der Healthcheck steht in `railway.toml` und zeigt auf `/health`. Domain im Railway-Dashboard verbinden.
-
-Umgebungsvariablen siehe `.env.example`.
-
-## Health-Endpoint
-
-`GET /health` liefert `{"status":"ok"}` mit HTTP 200.
-
-## Inhalt pflegen
-
-Wer Texte ändern will, findet sie hier:
-
-- Hero und Tagline: `src/components/Hero.astro`
-- Der Ort: `src/components/DerOrt.astro`
-- Chronik: `src/content/chronik/*.md`
-- Vereine und Institutionen: `src/components/Institutionen.astro`
-- Fußzeile: `src/components/Footer.astro`
+`sortKey` ist eine Zahl, damit auch unscharfe Jahreszahlen wie `"16. Jh."` an die richtige Stelle der Zeitleiste sortieren. `image` und `imageAlt` sind optional.
 
 ## Bilder hinzufügen
 
-Echte Fotos kommen nach `src/assets/images/`. Astro optimiert sie beim Build (WebP, mehrere Größen, Lazy Loading). Vorgehen:
+1. Datei nach `src/assets/images/` legen.
+2. `bun run optimize-images` ausführen (kappt zu große Quellen auf 2500 px, JPEG-Qualität 82).
+3. In der Astro-Komponente importieren und in `<Figure>` oder `<Image>` einsetzen. Astro übernimmt das Erzeugen mehrerer Größen, WebP-Konvertierung und Lazy Loading.
 
-1. Datei nach `src/assets/images/` legen, zum Beispiel `main-blick.jpg`.
-2. In dem Astro-Komponentenfile, in dem das Bild erscheinen soll, importieren und in `<Figure>` einsetzen:
+## Deployment auf Railway
 
-   ```astro
-   ---
-   import Figure from "~/components/Figure.astro";
-   import mainBlick from "~/assets/images/main-blick.jpg";
-   ---
-   <Figure src={mainBlick} alt="Blick über den Main bei Untereuerheim" caption="Main, Höhe Untereuerheim" aspect="3 / 2" />
-   ```
+Railway erkennt das `Dockerfile` und baut damit. Healthcheck in `railway.toml` zeigt auf `/health.json` (statisches File). Domain im Railway-Dashboard verbinden.
 
-Ohne `src` rendert `<Figure>` nur einen ruhigen Platzhalter in der Hintergrundfarbe. Mit `src` wird die volle `astro:assets`-Pipeline genutzt.
+Umgebungsvariablen siehe `.env.example`.
 
-Für ein Hero-Hintergrundbild: Bild importieren und als `<Image>` mit `position: absolute; inset: 0; object-fit: cover` als untere Ebene unter den Hero-Text legen.
+## Inhalt pflegen
+
+| Bereich | Datei |
+|---|---|
+| Hero | `src/components/Hero.astro` |
+| Der Ort | `src/components/DerOrt.astro` |
+| Chronik | `src/content/chronik/*.md` |
+| Institutionen | `src/components/Institutionen.astro` |
+| Footer | `src/components/Footer.astro` |
+| Impressum | `src/pages/impressum.astro` |
+| Datenschutz | `src/pages/datenschutz.astro` |
 
 ## Quellen
 
-Die Chronik stützt sich auf die Angaben der Gemeinde Grettstadt, des Bistums Würzburg und der gängigen Lexika. Wer einen Fehler findet, soll ihn bitte melden.
+Die Chronik stützt sich auf die Angaben der Gemeinde Grettstadt, des Bistums Würzburg und der gängigen Lexika. Wer einen Fehler findet, soll ihn bitte melden, Kontakt im Impressum.

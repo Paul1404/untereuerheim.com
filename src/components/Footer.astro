@@ -10,9 +10,19 @@ const year = new Date().getFullYear();
           Untereuerheim, Ortsteil von Grettstadt, Landkreis Schweinfurt.
         </p>
       </div>
-      <p class="text-[12px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
-        {year}
-      </p>
+      <div class="flex flex-col items-start gap-3 text-[13px] text-[color:var(--color-ink-soft)] sm:items-end">
+        <ul class="flex items-center gap-6">
+          <li>
+            <a href="/impressum" class="link-underline transition-colors hover:text-[color:var(--color-sandstone)]">Impressum</a>
+          </li>
+          <li>
+            <a href="/datenschutz" class="link-underline transition-colors hover:text-[color:var(--color-sandstone)]">Datenschutz</a>
+          </li>
+        </ul>
+        <p class="text-[12px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
+          {year}
+        </p>
+      </div>
     </div>
   </div>
 </footer>

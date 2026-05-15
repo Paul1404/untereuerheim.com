@@ -5,6 +5,8 @@ import instSv from "../assets/images/inst-sv.jpg";
 import instSchlossmuehle from "../assets/images/inst-schlossmuehle.jpg";
 import instStGallus from "../assets/images/inst-st-gallus.jpg";
 import instMainsteg from "../assets/images/mainsteg-untereuerheim.jpg";
+import instBuecherei from "../assets/images/katholische-buecherei-uheim.jpeg";
+import instKriegerdenkmal from "../assets/images/kriegerdenkmal-uheim.jpeg";
 
 type Inst = {
   name: string;
@@ -45,6 +47,15 @@ const institutionen: Inst[] = [
     imageAlt: "Die Pfarrkirche St. Gallus mit ihrem spitzen Kirchturm und das Wegkreuz davor.",
   },
   {
+    name: "KÖB Untereuerheim",
+    meta: "Katholische Öffentliche Bücherei.",
+    description: "Ehrenamtlich geführte Bücherei der Pfarrei mit Romanen, Kinder- und Sachbüchern. Ausleihe kostenlos.",
+    href: "http://www.koeb.untereuerheim.de",
+    hrefLabel: "koeb.untereuerheim.de",
+    image: instBuecherei,
+    imageAlt: "Eingangsschild der Katholischen Öffentlichen Bücherei Untereuerheim.",
+  },
+  {
     name: "Mainbrückenverein Untereuerheim",
     meta: "Verein zum Erhalt des Mainstegs.",
     description: "Trägerverein des Mainstegs zwischen Untereuerheim und Obereuerheim. Sammelt Spenden für Unterhalt und Sanierung der Brücke.",
@@ -53,20 +64,14 @@ const institutionen: Inst[] = [
     image: instMainsteg,
     imageAlt: "Der Mainsteg bei Untereuerheim, eine schlanke Bogenbrücke über den Main.",
   },
-];
-
-const weiterfuehrend = [
-  {
-    name: "KÖB Untereuerheim",
-    description: "Katholische Öffentliche Bücherei am Ort.",
-    href: "http://www.koeb.untereuerheim.de",
-    hrefLabel: "koeb.untereuerheim.de",
-  },
   {
     name: "Kriegerdenkmal",
-    description: "Dokumentation des Denkmals auf denkmalprojekt.org.",
+    meta: "Gedenkort für die Gefallenen.",
+    description: "Denkmal zum Gedenken an die Gefallenen der beiden Weltkriege. Namen und Geschichte dokumentiert auf denkmalprojekt.org.",
     href: "http://www.denkmalprojekt.org/2017/untereuerheim_gde_grettstad_lk-schweinfurt_bay.html",
     hrefLabel: "denkmalprojekt.org",
+    image: instKriegerdenkmal,
+    imageAlt: "Das Kriegerdenkmal in Untereuerheim mit den Namen der Gefallenen.",
   },
 ];
 ---
@@ -80,11 +85,11 @@ const weiterfuehrend = [
         Institutionen im Ort.
       </h2>
       <p class="mt-5 font-serif text-lg italic text-[color:var(--color-ink-soft)]">
-        Sportverein, Mühle, Pfarrei und Brückenverein.
+        Vereine, Mühle, Pfarrei, Bücherei und Denkmal.
       </p>
     </div>
 
-    <div class="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+    <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
       {institutionen.map((inst) => (
         <a
           href={inst.href}
@@ -97,7 +102,7 @@ const weiterfuehrend = [
               src={inst.image}
               alt={inst.imageAlt}
               widths={[480, 720, 960, 1280]}
-              sizes="(min-width: 1024px) 280px, (min-width: 768px) 360px, 100vw"
+              sizes="(min-width: 1024px) 380px, (min-width: 640px) 50vw, 100vw"
               loading="lazy"
               decoding="async"
               class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
@@ -109,9 +114,9 @@ const weiterfuehrend = [
             <p class="mt-2 text-[12px] uppercase tracking-[0.18em] text-[color:var(--color-muted)]">{inst.meta}</p>
             <p class="mt-5 text-[15px] leading-relaxed text-[color:var(--color-ink-soft)]">{inst.description}</p>
 
-            <span class="mt-8 inline-flex items-center gap-2 text-[13px] text-[color:var(--color-sandstone)]">
-              <span class="link-underline">{inst.hrefLabel}</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
+            <span class="mt-8 inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-[color:var(--color-sandstone)]">
+              <span class="link-underline break-all">{inst.hrefLabel}</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
                 <path d="M7 17 17 7"/>
                 <path d="M8 7h9v9"/>
               </svg>
@@ -119,38 +124,6 @@ const weiterfuehrend = [
           </div>
         </a>
       ))}
-    </div>
-
-    <div class="reveal mt-20 border-t border-[color:var(--color-line)] pt-12 sm:mt-24 sm:pt-14">
-      <p class="mb-6 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
-        Weiterführend
-      </p>
-      <ul class="grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2">
-        {weiterfuehrend.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              rel="external noopener"
-              target="_blank"
-              class="group block"
-            >
-              <p class="font-serif text-xl leading-tight text-[color:var(--color-ink)]">
-                {item.name}
-              </p>
-              <p class="mt-2 text-[14.5px] leading-relaxed text-[color:var(--color-ink-soft)]">
-                {item.description}
-              </p>
-              <span class="mt-3 inline-flex items-center gap-2 text-[13px] text-[color:var(--color-sandstone)]">
-                <span class="link-underline">{item.hrefLabel}</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="transition-transform group-hover:translate-x-0.5" aria-hidden="true">
-                  <path d="M7 17 17 7"/>
-                  <path d="M8 7h9v9"/>
-                </svg>
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
     </div>
   </div>
 </section>

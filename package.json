@@ -10,7 +10,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "icons": "bun run scripts/generate-icons.ts"
+    "icons": "bun run scripts/generate-icons.ts",
+    "og": "bun run scripts/generate-og-image.ts"
   },
   "dependencies": {
     "@astrojs/node": "^10.1.1",

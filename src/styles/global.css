@@ -96,3 +96,97 @@ h1, h2, h3, h4 {
 .link-underline:hover {
   background-size: 100% 1px;
 }
+
+/* Drop cap for opening paragraphs */
+.dropcap::first-letter {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 4.6em;
+  line-height: 0.85;
+  float: left;
+  padding: 0.08em 0.12em 0 0;
+  color: var(--color-sandstone);
+}
+
+/* Big numerals used as anchors in the margin of the archive */
+.numeral-anchor {
+  font-family: var(--font-serif);
+  font-feature-settings: "lnum" 1;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.82;
+  color: var(--color-line-strong);
+  font-variant-numeric: lining-nums;
+  user-select: none;
+}
+
+/* Pull quote between sections */
+.pull-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.45rem, 3vw, 2.35rem);
+  line-height: 1.22;
+  color: var(--color-ink-soft);
+  text-wrap: balance;
+}
+.pull-quote::before {
+  content: "„";
+  font-family: var(--font-serif);
+  color: var(--color-sandstone);
+  margin-right: 0.05em;
+}
+.pull-quote::after {
+  content: "“";
+  font-family: var(--font-serif);
+  color: var(--color-sandstone);
+  margin-left: 0.05em;
+}
+
+/* Ornamental divider: hairline + tiny rotated diamond */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  color: var(--color-line-strong);
+}
+.ornament::before,
+.ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-line-strong) 40%, var(--color-line-strong) 60%, transparent);
+}
+.ornament-glyph {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--color-sandstone);
+  transform: rotate(45deg);
+  flex: none;
+}
+.ornament-glyph::before,
+.ornament-glyph::after {
+  display: none;
+}
+
+/* Marginalia: tiny annotations next to the body text */
+.marginalia {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--color-muted);
+  letter-spacing: 0.005em;
+}
+
+/* Hairline rule on top of a block */
+.rule-top {
+  border-top: 1px solid var(--color-line);
+}
+
+/* Subtle vertical accent next to a paragraph (used for emphasized notes) */
+.note-rail {
+  border-left: 1px solid var(--color-line-strong);
+  padding-left: 1.25rem;
+}

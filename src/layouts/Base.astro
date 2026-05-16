@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title = "Untereuerheim. Ortsteil von Grettstadt im Landkreis Schweinfurt.",
-  description = "Untereuerheim ist ein Ortsteil von Grettstadt im Landkreis Schweinfurt, am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals erwähnt um 800.",
+  description = "Untereuerheim (PLZ 97508), Ortsteil von Grettstadt im Landkreis Schweinfurt. Am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800. Pfarrei St. Gallus, Schlossmühle, Mainsteg nach Obereuerheim.",
   image = "/og.jpg",
 } = Astro.props;
 
@@ -42,7 +42,7 @@ const jsonLd = {
       name: "Untereuerheim",
       alternateName: "Ortsteil Untereuerheim",
       description:
-        "Untereuerheim ist ein Ortsteil der Gemeinde Grettstadt im Landkreis Schweinfurt in Unterfranken, Bayern. Der Ort liegt am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um 800.",
+        "Untereuerheim ist ein Ortsteil der Gemeinde Grettstadt im Landkreis Schweinfurt in Unterfranken, Bayern. Der Ort liegt am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Postleitzahl 97508. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800.",
       url: siteOrigin.toString(),
       image: ogImage,
       geo: {
@@ -52,7 +52,7 @@ const jsonLd = {
       },
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Grettstadt",
+        addressLocality: "Untereuerheim",
         addressRegion: "BY",
         postalCode: "97508",
         addressCountry: "DE",

@@ -1,0 +1,358 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+
+type Denkmal = {
+  address: string;
+  year: string;
+  description: string;
+  id: string;
+};
+
+const baudenkmaeler: Denkmal[] = [
+  {
+    address: "Brunnenstraße 8",
+    year: "18. Jh.",
+    description: "Hoftor mit Fußgängerpforte, Sitznischen und Radabweisern.",
+    id: "D-6-78-138-73",
+  },
+  {
+    address: "Brunnenstraße 11",
+    year: "1798",
+    description: "Torbogen mit Nepomukfigur und Putti.",
+    id: "D-6-78-138-74",
+  },
+  {
+    address: "Fischgasse 2",
+    year: "1850",
+    description: "Kreuzigungsgruppe mit Relief Christus am Ölberg, Sandstein.",
+    id: "D-6-78-138-76",
+  },
+  {
+    address: "Hintere Gasse 2",
+    year: "1840",
+    description: "Hoftor mit Fußgängerpforte und Vasen-Bekrönung.",
+    id: "D-6-78-138-77",
+  },
+  {
+    address: "Immenrot 2",
+    year: "1750",
+    description: "Bildstock mit Tischsockel und Relief der Marienkrönung.",
+    id: "D-6-78-138-93",
+  },
+  {
+    address: "Lindenstraße 4",
+    year: "1775 / 1857",
+    description: "Torbogen mit Radabweisern und Kugelaufsatz, dazu eine Kreuzigungsgruppe von 1857.",
+    id: "D-6-78-138-79",
+  },
+  {
+    address: "Mühlgasse 7",
+    year: "1720",
+    description: "Torbogen mit Radabweisern, Fußgängerpforte mit Bänken und Kugelaufsätzen.",
+    id: "D-6-78-138-80",
+  },
+  {
+    address: "Beim Eichenweg",
+    year: "1628",
+    description: "Bildstock mit Rundschaft und Relief der Marienkrönung.",
+    id: "D-6-78-138-75",
+  },
+  {
+    address: "Bei der Obereuerheimer Straße",
+    year: "1850",
+    description: "Bildstock.",
+    id: "D-6-78-138-78",
+  },
+  {
+    address: "Friedhof am Schweinfurter Weg",
+    year: "1850",
+    description: "Zwei Friedhofskreuze mit Marienfiguren.",
+    id: "D-6-78-138-94",
+  },
+];
+
+type TocEntry = { href: string; label: string };
+
+const toc: TocEntry[] = [
+  { href: "#mittelalter", label: "Mittelalter und Grundherren" },
+  { href: "#pest", label: "Pest und Gelübde" },
+  { href: "#st-gallus", label: "St. Gallus" },
+  { href: "#schlossmuehle", label: "Schlossmühle" },
+  { href: "#baudenkmaeler", label: "Bildstöcke und Tore" },
+  { href: "#stufenlinde", label: "Stufenlinde" },
+  { href: "#mainsteg", label: "Fähre und Mainsteg" },
+  { href: "#verkehr", label: "Verkehr und Lage" },
+  { href: "#kriegerdenkmal", label: "Kriegergedenkkapelle" },
+  { href: "#quellen", label: "Quellen" },
+];
+
+type Quelle = { label: string; href: string };
+
+const quellen: Quelle[] = [
+  { label: "Untereuerheim – Wikipedia", href: "https://de.wikipedia.org/wiki/Untereuerheim" },
+  { label: "Obereuerheim – Wikipedia", href: "https://de.wikipedia.org/wiki/Obereuerheim" },
+  { label: "St. Gallus (Untereuerheim) – Wikipedia", href: "https://de.wikipedia.org/wiki/St._Gallus_(Untereuerheim)" },
+  { label: "Liste der Baudenkmäler in Grettstadt – Wikipedia", href: "https://de.wikipedia.org/wiki/Liste_der_Baudenkm%C3%A4ler_in_Grettstadt" },
+  { label: "Gemeinde Grettstadt – Untereuerheim", href: "https://www.grettstadt.de/verzeichnis/visitenkarte.php?mandat=170135" },
+  { label: "Gemeinde Grettstadt – Obereuerheim", href: "https://www.grettstadt.de/verzeichnis/visitenkarte.php?mandat=170134" },
+  { label: "Mainbrückenverein Untereuerheim", href: "https://www.mainbrueckenvereinuntereuerheim.de" },
+  { label: "Mainbrückenverein – Geschichte", href: "http://www.mainbrueckenverein.untereuerheim.de/ueber_uns.htm" },
+  { label: "Schlossmühle Untereuerheim", href: "https://schlossmuehle-untereuerheim.de" },
+  { label: "Kriegergedenkkapelle Untereuerheim – denkmalprojekt.org", href: "http://www.denkmalprojekt.org/2017/untereuerheim_gde_grettstad_lk-schweinfurt_bay.html" },
+  { label: "Chronik – untereuerheim.de", href: "http://www.untereuerheim.de/chronik.htm" },
+  { label: "Stufenlinde Untereuerheim – baumkunde.de", href: "https://www.baumkunde.de/baumregister/7779-stufenlinde_untereuerheim/" },
+  { label: "Bayerischer Denkmal-Atlas", href: "https://geoportal.bayern.de/denkmalatlas/" },
+];
+---
+<Base
+  title="Archiv. Was wir über Untereuerheim wissen."
+  description="Ausführliche Sammlung zu Untereuerheim (97508). Mittelalter und Grundherren (Ebrach, Hochstift Würzburg, Henneberg, Schönborn), Pestgelübde von 1585, Kuratiekirche St. Gallus mit Julius-Echter-Turm um 1600, Schlossmühle aus dem 16. Jahrhundert, Bildstöcke und Wegkreuze, Stufenlinde, Mainsteg nach Gädheim und Ottendorf seit 1384, Kriegergedenkkapelle und Verkehrsanbindung an A 70, B 303 und St 2277."
+>
+  <Nav />
+  <main id="hauptinhalt">
+    <section class="relative">
+      <div class="mx-auto max-w-4xl px-6 pt-32 pb-12 sm:px-8 sm:pt-40 sm:pb-16">
+        <div class="reveal">
+          <p class="mb-5 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
+            <span class="h-px w-8 bg-[color:var(--color-line-strong)]"></span>
+            Sammlung und Quellen
+          </p>
+          <h1 class="font-serif text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.95] tracking-[-0.02em] text-[color:var(--color-ink)]">
+            Archiv.
+          </h1>
+          <p class="mt-8 max-w-2xl text-balance font-serif text-[clamp(1.15rem,1.8vw,1.45rem)] italic leading-snug text-[color:var(--color-ink-soft)]">
+            Was sich aus Urkunden, Denkmallisten und örtlichen Quellen über Untereuerheim zusammentragen lässt.
+          </p>
+          <p class="mt-6 max-w-2xl text-[15px] leading-relaxed text-[color:var(--color-muted)]">
+            Die Hauptseite gibt die kurze Fassung. Diese Seite versammelt das, was sonst zwischen Wikipedia-Artikeln, der bayerischen Denkmalliste und den Webseiten der örtlichen Vereine verstreut liegt. Alle Quellen sind unten verlinkt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <nav aria-label="Inhaltsverzeichnis" class="reveal mx-auto mt-6 max-w-4xl px-6 sm:px-8">
+      <ol class="grid grid-cols-1 gap-x-8 gap-y-2 border-y border-[color:var(--color-line)] py-6 text-[14px] sm:grid-cols-2">
+        {toc.map((item, i) => (
+          <li class="flex items-baseline gap-3">
+            <span class="font-sans text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
+              {String(i + 1).padStart(2, "0")}
+            </span>
+            <a href={item.href} class="link-underline text-[color:var(--color-ink-soft)] transition-colors hover:text-[color:var(--color-sandstone)]">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <article class="mx-auto max-w-4xl px-6 sm:px-8">
+      <section id="mittelalter" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">01. Mittelalter</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Mittelalter und Grundherren.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            Der Name <em>Uraheim</em> taucht erstmals in den Urkundenbüchern der Klöster Fulda und Sankt Stephan in Würzburg auf. Eine Quelle datiert die Erwähnung auf den 3. Mai 800, die Ortschronik von untereuerheim.de auf das Jahr 880. Beide Datierungen beziehen sich auf dieselben Klosterbücher. Zu dieser Zeit gibt es noch keinen getrennten Ober- und Unterort.
+          </p>
+          <p>
+            Die erste sichere urkundliche Erwähnung fällt auf das Jahr 1152. In einer Würzburger Urkunde ist die Rede von einem <em>obern Uraheim</em>, was die Existenz eines Unterorts impliziert. Eine ortsansässige Adelsfamilie benennt sich nach dem Ort.
+          </p>
+          <p>
+            Im 13. Jahrhundert trennt sich der Name endgültig in Ober- und Untereuerheim. 1234 überträgt König Heinrich VII. seine Rechte in Euerheim an den Würzburger Bischof Hermann I. von Lobdeburg. 1282 gelangt Untereuerheim in den Besitz des Zisterzienserklosters Ebrach. In den folgenden Jahrhunderten wechseln sich Ebrach, das Hochstift Würzburg und die Grafen von Henneberg als Grundherren ab. Der Ort untersteht zeitweise der Zentgerichtsbarkeit Karlsberg.
+          </p>
+          <p>
+            1320 ist erstmals eine Mühle in Untereuerheim urkundlich belegt. Sie gehört dem Konvent von Maria Burghausen.
+          </p>
+          <p>
+            Der heutige Beiname <em>Schloss-</em> der Mühle stammt vom Schloss Euerburg im Nachbarort Obereuerheim. Georg Christoph von Bibra beginnt 1571 mit dessen Bau. 1696 geht Obereuerheim mitsamt Schloss an die Grafen von Schönborn über, in deren Besitz es bis 1880 verbleibt.
+          </p>
+        </div>
+      </section>
+
+      <section id="pest" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">02. Pest und Gelübde</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Die Pest von 1585 und das Gelübde.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            Zwischen dem Fest Peter und Paul am 29. Juni 1585 und dem Martinstag am 11. November desselben Jahres sterben 219 Einwohner Untereuerheims an der Pest. Zwei Tafeln an der Kirchhofmauer von St. Gallus erinnern bis heute daran.
+          </p>
+          <p>
+            In ihrer Not legen die Überlebenden ein Gelübde ab. Sie verpflichten sich zur jährlichen Wallfahrt nach Dettelbach, zur Wallfahrtskirche Maria im Sand am linken Mainufer. Die Wallfahrt findet seit über vierhundert Jahren ununterbrochen statt.
+          </p>
+          <p>
+            Die Mariensäule im Ort steht als sichtbares Zeichen dieses marianischen Gelübdes.
+          </p>
+        </div>
+      </section>
+
+      <section id="st-gallus" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">03. Pfarrkirche</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          St. Gallus.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            St. Gallus ist die römisch-katholische Kuratiekirche Untereuerheims. Sie gehört zur Pfarreiengemeinschaft St. Christophorus im Mainbogen mit Sitz in Gochsheim, im Dekanat Schweinfurt-Nord des Bistums Würzburg.
+          </p>
+          <p>
+            Das Gebäude steht in der Ortsmitte. Es ist eine Saalkirche mit drei Teilen. Der Julius-Echter-Turm im Osten entstand um 1600 und trägt einen achtseitigen, schiefergedeckten Knickhelm. Der dreiseitig geschlossene Chor schließt im Westen an. Das neugotische Langhaus dazwischen wurde in der zweiten Hälfte des 19. Jahrhunderts errichtet. Die Kirche, wie sie heute steht, ist also kein einheitliches Echter-Bauwerk, sondern setzt sich aus Resten der frühen Neuzeit und einer neugotischen Erweiterung zusammen.
+          </p>
+          <p>
+            Der Taufstein im Inneren trägt die Jahreszahl 1592, also die Echter-Zeit. Die Orgel mit zehn Registern, einem Manual und einem Pedal wurde 1850 gebaut. 1988 restaurierte sie der Orgelbauer Horst Hoffmann.
+          </p>
+          <p>
+            1979 wurde die Kirche instand gesetzt. Dabei stellte man die Ausmalung aus der Zeit um 1900 wieder her.
+          </p>
+          <p>
+            Vor dem Eingang stehen die Stufenlinde und ein Wegkreuz.
+          </p>
+        </div>
+      </section>
+
+      <section id="schlossmuehle" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">04. Mühle</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Die Schlossmühle.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            Die Schlossmühle stammt aus dem 16. Jahrhundert. Sie gehörte ursprünglich zum Schloss Euerburg im benachbarten Obereuerheim, daher ihr Name. Sie ist eine der ältesten arbeitenden Mühlen der Region und seit dem 19. Jahrhundert in Familienbetrieb.
+          </p>
+          <p>
+            Heute betreibt sie Jochen Schor (e. K.) am Schloßmühlenweg 2. Verkauft werden Weizen-, Dinkel- und Roggenmehle, glutenfreie Mehle, daneben Getreide, Nudeln und ausgewählte regionale Produkte. Der Mühlenladen gibt Mehl ab einem Kilo ab.
+          </p>
+          <p class="font-sans text-[14px] leading-relaxed text-[color:var(--color-muted)]">
+            Bereits 1320 ist eine andere, frühere Mühle in Untereuerheim urkundlich belegt. Sie gehörte dem Konvent von Maria Burghausen. Ob beide Mühlen am selben Standort lagen, ist nicht überliefert.
+          </p>
+        </div>
+      </section>
+
+      <section id="baudenkmaeler" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">05. Denkmalliste</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Bildstöcke, Tore und Wegkreuze.
+        </h2>
+        <p class="mt-6 max-w-2xl text-[15px] leading-relaxed text-[color:var(--color-ink-soft)]">
+          In der bayerischen Denkmalliste sind für Untereuerheim folgende Bau- und Kleindenkmäler eingetragen. Stand laut Bayerischem Landesamt für Denkmalpflege.
+        </p>
+
+        <ol class="mt-10 divide-y divide-[color:var(--color-line)] border-y border-[color:var(--color-line)]">
+          {baudenkmaeler.map((d) => (
+            <li class="grid grid-cols-1 gap-x-8 gap-y-2 py-5 sm:grid-cols-[10ch_1fr_auto]">
+              <span class="font-serif text-lg text-[color:var(--color-sandstone)]">{d.year}</span>
+              <div>
+                <p class="font-serif text-lg text-[color:var(--color-ink)]">{d.address}</p>
+                <p class="mt-1 text-[14.5px] leading-relaxed text-[color:var(--color-ink-soft)]">{d.description}</p>
+              </div>
+              <span class="font-sans text-[11px] uppercase tracking-[0.18em] text-[color:var(--color-muted)] sm:text-right">
+                {d.id}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section id="stufenlinde" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">06. Naturdenkmal</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Die Stufenlinde.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            Vor der Pfarrkirche St. Gallus steht die Stufenlinde. Sie ist eine in mehreren Etagen gezogene Linde, im Baumkataster mit vier Stockwerken erfasst. Stufenlinden wurden traditionell als Tanzlinden, Gerichtslinden oder Versammlungslinden gezogen. Sie sind heute selten und stehen oft unter Naturdenkmalschutz.
+          </p>
+          <p>
+            Daneben steht ein Wegkreuz. Beides bildet mit dem Kirchturm das eigentliche Wahrzeichen des Ortskerns.
+          </p>
+        </div>
+      </section>
+
+      <section id="mainsteg" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">07. Mainquerung</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Fähre und Mainsteg.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            An der heutigen Stelle des Mainstegs ist seit 1384 urkundlich eine Fähre belegt. Sie verband das rechte Ufer mit den Nachbarorten Gädheim und Ottendorf, beide im heutigen Landkreis Haßberge. Untereuerheim hatte über Jahrhunderte zahlreiche Fischer, Schiffer und einen Fährmann. Über die Mainverbindung gingen viele Ehen, viele Junge ließen sich auf der einen oder anderen Mainseite nieder.
+          </p>
+          <p>
+            1963 wurde der Fährbetrieb wegen des Mainausbaus eingestellt. Die damals noch selbstständige Gemeinde Untereuerheim wollte auf die Mainverbindung nicht verzichten und finanzierte aus eigener Kraft den Bau eines Stegs. Seit 1967 verbindet er die Ufer als Fußgängerbrücke und ist seither das wichtigste Wahrzeichen des Ortes.
+          </p>
+          <p>
+            2011 wurde der Mainbrückenverein Untereuerheim gegründet, um den Erhalt der Mainquerung zu sichern. Der alte Steg muss wegen des erneuten Mainausbaus abgebaut werden, da seine Pfeiler im Wasser stehen. An seiner Stelle soll eine Hängebrücke entstehen. Der Verein sammelt Spenden für den Ersatzneubau.
+          </p>
+        </div>
+      </section>
+
+      <section id="verkehr" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">08. Verkehr</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Verkehr und Lage.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            Untereuerheim liegt 223 Meter über dem Meer. Die Gemarkung misst 5,48 Quadratkilometer. Der Ort liegt zwischen Schweinfurt im Westen und Haßfurt im Osten, am rechten Mainufer.
+          </p>
+          <p>
+            Südlich des Ortes verläuft in Ost-West-Richtung die Bundesautobahn 70 zwischen den Anschlussstellen 9 Schonungen und 10 Haßfurt. Das Teilstück zwischen Ober- und Untereuerheim wurde 1992 freigegeben. Nördlich des Ortes verläuft, ebenfalls in Ost-West-Richtung, die Bundesstraße 303.
+          </p>
+          <p>
+            Die Staatsstraße 2277 führt westwärts nach Weyer und südwärts nach Obereuerheim. Über den Mainsteg ist Ottendorf (Gemeinde Gädheim, Landkreis Haßberge) am linken Mainufer fußläufig erreichbar.
+          </p>
+          <p>
+            Postleitzahl 97508, Vorwahl 09729, Kfz-Kennzeichen SW.
+          </p>
+        </div>
+      </section>
+
+      <section id="kriegerdenkmal" class="reveal scroll-mt-24 pt-20 sm:pt-28">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">09. Gedenkort</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Kriegergedenkkapelle.
+        </h2>
+        <div class="mt-8 space-y-6 text-[16px] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+          <p>
+            Die Kriegergedenkkapelle steht an der Einmündung des Schloßmühlenwegs in die Obereuerheimer Straße. An der Rückwand befindet sich ein Kreuz zwischen zwei steinernen Namensplatten. Eine davon trägt die Inschrift <em>Die Heimat ihren gefallenen Söhnen</em>, eine zweite <em>Unsere Vermißten</em>. Beide Weltkriege sind dokumentiert.
+          </p>
+          <p>
+            An der linken Wand hängt ein Wandbild mit der Kriegschronik 1914 bis 1918 des örtlichen Krieger- und Veteranenvereins.
+          </p>
+          <p>
+            Die vollständige Liste der Namen ist auf denkmalprojekt.org dokumentiert. Der Link steht unten in den Quellen.
+          </p>
+        </div>
+      </section>
+
+      <section id="quellen" class="reveal scroll-mt-24 pt-20 pb-12 sm:pt-28 sm:pb-16">
+        <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">10. Quellen</p>
+        <h2 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+          Quellen und weitere Lektüre.
+        </h2>
+        <p class="mt-6 max-w-2xl text-[15px] leading-relaxed text-[color:var(--color-ink-soft)]">
+          Alle Angaben auf dieser Seite stammen aus den folgenden öffentlichen Quellen.
+        </p>
+        <ul class="mt-8 divide-y divide-[color:var(--color-line)] border-y border-[color:var(--color-line)]">
+          {quellen.map((q) => (
+            <li class="py-4">
+              <a
+                href={q.href}
+                rel="external noopener"
+                target="_blank"
+                class="link-underline text-[15.5px] text-[color:var(--color-ink-soft)] transition-colors hover:text-[color:var(--color-sandstone)]"
+              >
+                {q.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </article>
+  </main>
+  <Footer />
+</Base>

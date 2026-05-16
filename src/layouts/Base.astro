@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title = "Untereuerheim. Ortsteil von Grettstadt im Landkreis Schweinfurt.",
-  description = "Untereuerheim (PLZ 97508), Ortsteil von Grettstadt im Landkreis Schweinfurt. Am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800. Pfarrei St. Gallus, Schlossmühle, Mainsteg nach Obereuerheim.",
+  description = "Untereuerheim (PLZ 97508), Ortsteil von Grettstadt im Landkreis Schweinfurt. Am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800. Pfarrei St. Gallus, Schlossmühle, Mainsteg nach Gädheim und Ottendorf.",
   image = "/og.jpg",
 } = Astro.props;
 
@@ -109,7 +109,7 @@ const jsonLd = {
       "@id": new URL("#mainbrueckenverein", siteOrigin).toString(),
       name: "Mainbrückenverein Untereuerheim",
       description:
-        "Trägerverein des Mainstegs zwischen Untereuerheim und Obereuerheim.",
+        "Trägerverein des Mainstegs zwischen Untereuerheim am rechten Mainufer und Gädheim/Ottendorf am linken Ufer im Landkreis Haßberge.",
       url: "https://www.mainbrueckenvereinuntereuerheim.de",
       areaServed: { "@id": placeId },
     },

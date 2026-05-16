@@ -3,6 +3,24 @@ import Figure from "./Figure.astro";
 import luftbild from "../assets/images/luftbild-untereuerheim.jpg";
 import historisch from "../assets/images/u-heim-historisch.png";
 import stufenlinde from "../assets/images/stufenlinde-uheim.jpg";
+
+const fakten: { label: string; value: string }[] = [
+  { label: "Postleitzahl", value: "97508" },
+  { label: "Vorwahl", value: "09729" },
+  { label: "Kfz-Kennzeichen", value: "SW" },
+  { label: "Koordinaten", value: "50.0136° N, 10.3547° O" },
+  { label: "Höhe", value: "223 m ü. NHN" },
+  { label: "Fläche (Gemarkung)", value: "5,48 km²" },
+  { label: "Einwohner", value: "786 (31. Dezember 2020)" },
+  { label: "Gemeinde", value: "Grettstadt" },
+  { label: "Landkreis", value: "Schweinfurt" },
+  { label: "Regierungsbezirk", value: "Unterfranken" },
+  { label: "Bundesland", value: "Bayern" },
+  { label: "Eingemeindung", value: "1. Mai 1978" },
+  { label: "Erstmals erwähnt", value: "um das Jahr 800" },
+  { label: "Pfarrei", value: "St. Gallus, Bistum Würzburg" },
+  { label: "Mainsteg verbindet mit", value: "Gädheim und Ottendorf" },
+];
 ---
 <section id="der-ort" class="relative scroll-mt-24 py-28 sm:py-36">
   <div class="mx-auto max-w-6xl px-6 sm:px-8">
@@ -28,13 +46,13 @@ import stufenlinde from "../assets/images/stufenlinde-uheim.jpg";
       <div class="reveal lg:col-span-7">
         <div class="space-y-6 font-serif text-[1.2rem] leading-[1.75] text-[color:var(--color-ink-soft)] sm:text-[1.28rem]">
           <p>
-            Untereuerheim liegt nordöstlich von Grettstadt, zwischen Schweinfurt und Haßfurt, am rechten Ufer des Mains. Der Ortskern besteht überwiegend aus Sandsteinhäusern. Die Pfarrkirche St. Gallus steht in der Ortsmitte.
+            Untereuerheim liegt nordöstlich von Grettstadt, zwischen Schweinfurt und Haßfurt, am rechten Ufer des Mains. Die Pfarrkirche St. Gallus steht in der Ortsmitte, daneben die Stufenlinde und das Wegkreuz.
           </p>
           <p>
-            Rund 780 Einwohner. Landwirtschaft, eine arbeitende Mühle und die Pfarrei prägen den Ort.
+            Rund 780 Einwohner. Landwirtschaft, eine arbeitende Mühle und die Pfarrei prägen den Ort. Vom rechten Mainufer führt der Mainsteg hinüber nach Gädheim und Ottendorf im Landkreis Haßberge. Die Mainverbindung an dieser Stelle ist seit 1384 als Fähre urkundlich belegt.
           </p>
           <p class="font-sans text-[15px] not-italic leading-relaxed text-[color:var(--color-muted)]">
-            Landkreis Schweinfurt, Regierungsbezirk Unterfranken, Freistaat Bayern. Ortsteil der Gemeinde Grettstadt seit dem 1. Mai 1978.
+            Postleitzahl 97508. Landkreis Schweinfurt, Regierungsbezirk Unterfranken, Freistaat Bayern. Ortsteil der Gemeinde Grettstadt seit dem 1. Mai 1978.
           </p>
         </div>
 
@@ -54,6 +72,37 @@ import stufenlinde from "../assets/images/stufenlinde-uheim.jpg";
             caption="Stufenlinde im Ortskern. Foto: baumkunde.de."
             aspect="3 / 2"
           />
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal mt-24 sm:mt-32">
+      <div class="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-20">
+        <div class="lg:col-span-5">
+          <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
+            Daten und Fakten
+          </p>
+          <h3 class="font-serif text-3xl leading-[1.1] tracking-tight sm:text-4xl">
+            Auf einen Blick.
+          </h3>
+          <p class="mt-5 max-w-md font-serif text-lg italic leading-snug text-[color:var(--color-ink-soft)]">
+            Die wichtigsten Eckdaten zu Untereuerheim.
+          </p>
+        </div>
+
+        <div class="lg:col-span-7">
+          <dl class="grid grid-cols-1 gap-x-10 gap-y-5 sm:grid-cols-2">
+            {fakten.map((f) => (
+              <div class="flex flex-col gap-1 border-b border-[color:var(--color-line)] pb-4">
+                <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">
+                  {f.label}
+                </dt>
+                <dd class="font-serif text-lg text-[color:var(--color-ink)]">
+                  {f.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title = "Untereuerheim. Ortsteil von Grettstadt im Landkreis Schweinfurt.",
-  description = "Untereuerheim ist ein Ortsteil von Grettstadt im Landkreis Schweinfurt, am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals erwähnt um 800.",
+  description = "Untereuerheim (PLZ 97508), Ortsteil von Grettstadt im Landkreis Schweinfurt. Am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800. Pfarrei St. Gallus, Schlossmühle, Mainsteg nach Obereuerheim.",
   image = "/og.jpg",
 } = Astro.props;
 
@@ -42,17 +42,17 @@ const jsonLd = {
       name: "Untereuerheim",
       alternateName: "Ortsteil Untereuerheim",
       description:
-        "Untereuerheim ist ein Ortsteil der Gemeinde Grettstadt im Landkreis Schweinfurt in Unterfranken, Bayern. Der Ort liegt am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um 800.",
+        "Untereuerheim ist ein Ortsteil der Gemeinde Grettstadt im Landkreis Schweinfurt in Unterfranken, Bayern. Der Ort liegt am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Postleitzahl 97508. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800.",
       url: siteOrigin.toString(),
       image: ogImage,
       geo: {
         "@type": "GeoCoordinates",
-        latitude: 50.01344,
-        longitude: 10.35615,
+        latitude: 50.01361,
+        longitude: 10.35472,
       },
       address: {
         "@type": "PostalAddress",
-        addressLocality: "Grettstadt",
+        addressLocality: "Untereuerheim",
         addressRegion: "BY",
         postalCode: "97508",
         addressCountry: "DE",
@@ -98,9 +98,9 @@ const jsonLd = {
     {
       "@type": "Church",
       "@id": new URL("#st-gallus", siteOrigin).toString(),
-      name: "Pfarrei St. Gallus",
+      name: "St. Gallus Untereuerheim",
       description:
-        "Pfarrei und Kirche St. Gallus in Untereuerheim, Bistum Würzburg. Kirchturm aus der Echter-Zeit, Taufstein von 1592.",
+        "Römisch-katholische Kuratiekirche St. Gallus in Untereuerheim. Teil der Pfarreiengemeinschaft St. Christophorus im Mainbogen im Dekanat Schweinfurt-Nord, Bistum Würzburg. Julius-Echter-Turm um 1600, neugotisches Langhaus aus der zweiten Hälfte des 19. Jahrhunderts, Taufstein von 1592.",
       url: "https://st-gallus-st-laurentius.com",
       containedInPlace: { "@id": placeId },
     },
@@ -139,8 +139,8 @@ const jsonLd = {
 
     <meta name="geo.region" content="DE-BY" />
     <meta name="geo.placename" content="Untereuerheim, Grettstadt" />
-    <meta name="geo.position" content="50.01344;10.35615" />
-    <meta name="ICBM" content="50.01344, 10.35615" />
+    <meta name="geo.position" content="50.01361;10.35472" />
+    <meta name="ICBM" content="50.01361, 10.35472" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Untereuerheim" />

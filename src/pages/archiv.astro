@@ -86,11 +86,11 @@ const tafeln: TafelMeta[] = [
   { no: "III",  href: "#st-gallus",     label: "St. Gallus",                  era: "um 1600" },
   { no: "IV",   href: "#schlossmuehle", label: "Die Schlossmühle",            era: "16. Jh." },
   { no: "V",    href: "#baudenkmaeler", label: "Bildstöcke, Tore und Wegkreuze", era: "Denkmalliste" },
-  { no: "VI",   href: "#stufenlinde",   label: "Die Stufenlinde",             era: "Naturdenkmal" },
+  { no: "VI",   href: "#stufenlinde",   label: "Die Stufenlinde",             era: "Lindenstraße" },
   { no: "VII",  href: "#mainsteg",      label: "Fähre und Mainsteg",          era: "seit 1384" },
   { no: "VIII", href: "#verkehr",       label: "Verkehr und Lage",            era: "heute" },
   { no: "IX",   href: "#kriegerdenkmal",label: "Kriegergedenkkapelle",        era: "1914 / 1939" },
-  { no: "X",    href: "#quellen",       label: "Quellen",                     era: "Apparat" },
+  { no: "X",    href: "#quellen",       label: "Quellen",                     era: "Belege" },
 ];
 
 type Quelle = { label: string; href: string };
@@ -124,16 +124,16 @@ const quellen: Quelle[] = [
         <div class="reveal">
           <p class="mb-6 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">
             <span class="h-px w-10 bg-[color:var(--color-line-strong)]"></span>
-            Eine Sammlung in zehn Tafeln
+            Zehn Abschnitte
           </p>
           <h1 class="font-serif text-[clamp(3.5rem,11vw,9rem)] leading-[0.88] tracking-[-0.025em] text-[color:var(--color-ink)]">
             Archiv<span class="text-[color:var(--color-sandstone)]">.</span>
           </h1>
           <p class="mt-10 max-w-xl text-balance font-serif text-[clamp(1.2rem,2vw,1.55rem)] italic leading-[1.3] text-[color:var(--color-ink-soft)]">
-            Was sich aus Urkunden, Denkmallisten und örtlichen Quellen über Untereuerheim zusammentragen lässt.
+            Was über Untereuerheim aus öffentlichen Quellen belegt ist.
           </p>
           <p class="mt-8 max-w-md text-[14px] leading-relaxed text-[color:var(--color-muted)]">
-            Untereuerheim, PLZ 97508. Ortsteil der Gemeinde Grettstadt, Landkreis Schweinfurt, am rechten Ufer des Mains. Die Hauptseite gibt die kurze Fassung. Diese Seite versammelt das Lange.
+            Untereuerheim, PLZ 97508. Ortsteil der Gemeinde Grettstadt, Landkreis Schweinfurt, am rechten Ufer des Mains. Die Hauptseite gibt die kurze Fassung, diese Seite die ausführliche.
           </p>
         </div>
 
@@ -187,32 +187,24 @@ const quellen: Quelle[] = [
             </h2>
             <div class="mt-10 space-y-6 text-[16px] leading-[1.78] text-[color:var(--color-ink-soft)] sm:text-[17px]">
               <p class="dropcap">
-                Der Name <em>Uraheim</em> taucht erstmals in den Urkundenbüchern der Klöster Fulda und Sankt Stephan in Würzburg auf. Eine Quelle datiert die Erwähnung auf den 3. Mai 800, die Ortschronik auf 880. Beide Datierungen beziehen sich auf dieselben Klosterbücher. Zu dieser Zeit gibt es noch keinen getrennten Ober- und Unterort.
+                Der Name <em>Uraheim</em> taucht erstmals in den Urkundenbüchern der Klöster Fulda und Sankt Stephan in Würzburg auf. Die Datierung schwankt zwischen 800 und 880. Zu dieser Zeit gibt es noch keinen getrennten Ober- und Unterort.
               </p>
               <p>
-                Die erste sichere urkundliche Erwähnung fällt auf 1152. In einer Würzburger Urkunde ist die Rede von einem <em>obern Uraheim</em>, was die Existenz eines Unterorts impliziert. Eine ortsansässige Adelsfamilie benennt sich nach dem Ort.
+                Im 12. Jahrhundert ist in einer Würzburger Urkunde von einem <em>obern Uraheim</em> die Rede, was die Existenz eines Unterorts impliziert.
               </p>
               <p>
-                Im 13. Jahrhundert trennt sich der Name endgültig in Ober- und Untereuerheim. 1234 überträgt König Heinrich VII. seine Rechte in Euerheim an den Würzburger Bischof Hermann I. von Lobdeburg. 1282 gelangt Untereuerheim an das Zisterzienserkloster Ebrach. In den folgenden Jahrhunderten wechseln sich Ebrach, das Hochstift Würzburg und die Grafen von Henneberg als Grundherren ab.
+                Im 13. Jahrhundert trennt sich der Name endgültig in Ober- und Untereuerheim. In den folgenden Jahrhunderten wechseln sich das Zisterzienserkloster Ebrach, das Hochstift Würzburg und die Grafen von Henneberg als Grundherren ab. Am 1. Mai 1978 wird Untereuerheim im Zuge der bayerischen Gebietsreform nach Grettstadt eingemeindet.
               </p>
             </div>
 
             <dl class="mt-12 grid grid-cols-1 gap-x-8 gap-y-3 rule-top border-b border-[color:var(--color-line)] py-6 text-[14px] sm:grid-cols-2">
               <div class="flex items-baseline gap-4">
-                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">800</dt>
+                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">um 800</dt>
                 <dd class="text-[color:var(--color-ink-soft)]">Erstmals als <em>Uraheim</em> belegt</dd>
               </div>
               <div class="flex items-baseline gap-4">
-                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">1152</dt>
+                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">13. Jh.</dt>
                 <dd class="text-[color:var(--color-ink-soft)]">Trennung in <em>obern</em> und <em>untern</em> Uraheim</dd>
-              </div>
-              <div class="flex items-baseline gap-4">
-                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">1234</dt>
-                <dd class="text-[color:var(--color-ink-soft)]">Heinrich VII. → Hochstift Würzburg</dd>
-              </div>
-              <div class="flex items-baseline gap-4">
-                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">1282</dt>
-                <dd class="text-[color:var(--color-ink-soft)]">Übergang an Kloster Ebrach</dd>
               </div>
               <div class="flex items-baseline gap-4">
                 <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">1320</dt>
@@ -221,6 +213,10 @@ const quellen: Quelle[] = [
               <div class="flex items-baseline gap-4">
                 <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">1571</dt>
                 <dd class="text-[color:var(--color-ink-soft)]">Baubeginn Schloss Euerburg (Obereuerheim)</dd>
+              </div>
+              <div class="flex items-baseline gap-4">
+                <dt class="font-serif text-[color:var(--color-sandstone)] tabular-nums w-20">1978</dt>
+                <dd class="text-[color:var(--color-ink-soft)]">Eingemeindung nach Grettstadt</dd>
               </div>
             </dl>
           </div>
@@ -231,9 +227,9 @@ const quellen: Quelle[] = [
       <div class="reveal mt-32 mb-32 sm:mt-40 sm:mb-40">
         <div class="ornament mb-12"><span class="ornament-glyph"></span></div>
         <blockquote class="pull-quote mx-auto max-w-3xl text-center">
-          Zwischen Peter und Paul und Martini sterben zweihundertneunzehn Einwohner an der Pest.
+          219 Einwohner sterben zwischen Juni und November 1585 an der Pest.
         </blockquote>
-        <p class="mt-6 text-center font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">Anno Domini 1585</p>
+        <p class="mt-6 text-center font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">1585</p>
       </div>
 
       <!-- TAFEL II — PEST -->
@@ -260,10 +256,7 @@ const quellen: Quelle[] = [
                 Zwischen dem Fest Peter und Paul am 29. Juni 1585 und dem Martinstag am 11. November desselben Jahres sterben 219 Einwohner Untereuerheims an der Pest. In ihrer Not legen die Überlebenden ein Gelübde ab.
               </p>
               <p>
-                Sie verpflichten sich zur jährlichen Wallfahrt nach Dettelbach, zur Wallfahrtskirche Maria im Sand am linken Mainufer. Die Wallfahrt findet seither ununterbrochen statt.
-              </p>
-              <p class="note-rail font-serif italic text-[color:var(--color-ink-soft)]">
-                Die Mariensäule im Ort steht als sichtbares Zeichen dieses Gelübdes.
+                Sie verpflichten sich zur jährlichen Wallfahrt nach Dettelbach, zur Wallfahrtskirche Maria im Sand am linken Mainufer. Die Wallfahrt findet seit über 400 Jahren alljährlich statt.
               </p>
             </div>
           </div>
@@ -283,7 +276,7 @@ const quellen: Quelle[] = [
               1600
             </div>
             <p class="marginalia mt-6 max-w-[20ch]">
-              Der Julius-Echter-Turm im Osten, der eigentliche Anker des Bauwerks. Chor und Langhaus stammen aus anderen Zeiten.
+              Julius-Echter-Turm im Osten, dreiseitig geschlossener Chor im Westen, neugotisches Langhaus aus dem 19. Jahrhundert dazwischen.
             </p>
           </aside>
 
@@ -296,10 +289,7 @@ const quellen: Quelle[] = [
                 St. Gallus ist die römisch-katholische Kuratiekirche Untereuerheims. Sie gehört zur Pfarreiengemeinschaft St. Christophorus im Mainbogen mit Sitz in Gochsheim, im Dekanat Schweinfurt-Nord des Bistums Würzburg.
               </p>
               <p>
-                Eine Saalkirche aus drei Teilen. Der Julius-Echter-Turm im Osten entstand um 1600 und trägt einen achtseitigen, schiefergedeckten Knickhelm. Der dreiseitig geschlossene Chor schließt im Westen an. Das neugotische Langhaus dazwischen wurde in der zweiten Hälfte des 19. Jahrhunderts errichtet. Die Kirche, wie sie heute steht, ist kein einheitliches Echter-Bauwerk, sondern setzt sich aus Resten der frühen Neuzeit und einer neugotischen Erweiterung zusammen.
-              </p>
-              <p class="note-rail font-serif italic text-[color:var(--color-ink-soft)]">
-                Vor dem Turm steht ein Wegkreuz. Die Stufenlinde, oft mit der Kirche in einem Atemzug genannt, steht nicht hier, sondern in der nahen Lindenstraße.
+                Eine Saalkirche aus drei Teilen. Der Julius-Echter-Turm im Osten entstand um 1600 und trägt einen achtseitigen, schiefergedeckten Knickhelm. Der dreiseitig geschlossene Chor schließt im Westen an. Das neugotische Langhaus dazwischen wurde in der zweiten Hälfte des 19. Jahrhunderts errichtet.
               </p>
             </div>
 
@@ -346,7 +336,7 @@ const quellen: Quelle[] = [
               16. Jh.
             </div>
             <p class="marginalia mt-6 max-w-[20ch]">
-              Schloßmühlenweg 2. Eine der ältesten arbeitenden Mühlen der Region, seit dem 19. Jahrhundert in Familienbetrieb.
+              Schloßmühlenweg 2. Im 16. Jahrhundert errichtet, bis heute in Betrieb.
             </p>
           </aside>
 
@@ -359,7 +349,7 @@ const quellen: Quelle[] = [
                 Die Schlossmühle stammt aus dem 16. Jahrhundert. Sie gehörte ursprünglich zum Schloss Euerburg im benachbarten Obereuerheim, daher ihr Name. Heute betreibt sie Jochen Schor (e. K.) am Schloßmühlenweg 2.
               </p>
               <p>
-                Verkauft werden Weizen-, Dinkel- und Roggenmehle, glutenfreie Mehle, dazu Getreide, Nudeln und ausgewählte regionale Produkte. Der Mühlenladen gibt Mehl ab einem Kilo ab.
+                Der Mühlenladen bietet eigene Mehle, Getreide und regionale Produkte an.
               </p>
               <p class="marginalia">
                 Bereits 1320 ist eine andere, frühere Mühle in Untereuerheim urkundlich belegt. Sie gehörte dem Konvent von Maria Burghausen. Ob beide Mühlen am selben Standort lagen, ist nicht überliefert.
@@ -412,27 +402,20 @@ const quellen: Quelle[] = [
         </ol>
       </section>
 
-      <!-- Pull quote -->
-      <div class="reveal mt-32 mb-28 sm:mt-40 sm:mb-36">
-        <div class="ornament mb-12"><span class="ornament-glyph"></span></div>
-        <blockquote class="pull-quote mx-auto max-w-3xl text-center">
-          In vier Etagen gezogen, hundert Jahre alt, in der Lindenstraße.
-        </blockquote>
-        <p class="mt-6 text-center font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">Die Stufenlinde</p>
-      </div>
+      <div class="ornament my-28 sm:my-36"><span class="ornament-glyph"></span></div>
 
       <!-- TAFEL VI — STUFENLINDE -->
       <section id="stufenlinde" class="reveal scroll-mt-24">
         <div class="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-12">
           <aside class="lg:col-span-4">
             <p class="font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">
-              Tafel VI &nbsp;·&nbsp; Naturdenkmal
+              Tafel VI &nbsp;·&nbsp; Linde
             </p>
             <div class="numeral-anchor mt-8 text-[clamp(5.5rem,12vw,9rem)]">
               IV
             </div>
             <p class="marginalia mt-6 max-w-[20ch]">
-              Stockwerke im Baumkataster. Stufenlinden wurden traditionell als Tanz-, Gerichts- oder Versammlungslinden gezogen. Heute selten und meist geschützt.
+              Stockwerke im Baumkataster. Stufenlinden wurden traditionell als Tanz-, Gerichts- oder Versammlungslinden gezogen. Heute selten.
             </p>
           </aside>
 
@@ -442,10 +425,10 @@ const quellen: Quelle[] = [
             </h2>
             <div class="mt-10 space-y-6 text-[16px] leading-[1.78] text-[color:var(--color-ink-soft)] sm:text-[17px]">
               <p class="dropcap">
-                In der Lindenstraße steht die Stufenlinde, nicht wie oft erzählt vor der Pfarrkirche. Sie ist eine in mehreren Etagen gezogene Linde, im Baumkataster mit vier Stockwerken erfasst.
+                Die Stufenlinde steht in der Lindenstraße. Sie ist eine Winterlinde, in mehreren Etagen gezogen, im Baumkataster mit vier Stockwerken erfasst und auf etwa hundert Jahre geschätzt.
               </p>
               <p>
-                Neben der Linde, am Anwesen Lindenstraße 4, steht eine Kreuzigungsgruppe von 1857, dazu ein Torbogen mit Radabweisern und Kugelaufsatz. Linde und Kreuzigungsgruppe zusammen bilden im Ortskern eine zweite, oft verkannte Wahrzeichengruppe neben dem Kirchturm.
+                Am Anwesen Lindenstraße 4 stehen außerdem ein Torbogen mit Radabweisern und Kugelaufsatz aus dem Jahr 1775 sowie eine Kreuzigungsgruppe von 1857.
               </p>
               <p class="marginalia">
                 Quelle Standort: baumkunde.de, Baumregister 7779.
@@ -478,13 +461,13 @@ const quellen: Quelle[] = [
             </h2>
             <div class="mt-10 space-y-6 text-[16px] leading-[1.78] text-[color:var(--color-ink-soft)] sm:text-[17px]">
               <p class="dropcap">
-                An der heutigen Stelle des Mainstegs ist seit 1384 eine Fähre belegt. Sie verband das rechte Ufer mit Gädheim und Ottendorf im heutigen Landkreis Haßberge. Über diese Mainverbindung gingen viele Ehen, viele Junge ließen sich auf der einen oder anderen Mainseite nieder.
+                An der heutigen Stelle des Mainstegs ist seit 1384 eine Fähre belegt. Sie verband das rechte Ufer mit Gädheim und Ottendorf im heutigen Landkreis Haßberge.
               </p>
               <p>
                 1963 wurde der Fährbetrieb wegen des Mainausbaus eingestellt. Die damals noch selbstständige Gemeinde Untereuerheim wollte auf die Mainverbindung nicht verzichten und finanzierte aus eigener Kraft den Bau eines Stegs. Seit 1967 verbindet er die Ufer als Fußgängerbrücke.
               </p>
               <p class="note-rail font-serif italic text-[color:var(--color-ink-soft)]">
-                Der alte Steg muss wegen des erneuten Mainausbaus abgebaut werden. An seiner Stelle soll eine Hängebrücke entstehen. Der Mainbrückenverein, gegründet 2011, sammelt Spenden für den Ersatzneubau.
+                Im Januar 2025 wurde der alte Betonsteg gesperrt, der Abriss begann im Februar. Geplant ist ein Ersatzneubau als rückverankerte Hängebrücke mit rund 90 Metern Hauptfeld. Der Mainbrückenverein, gegründet 2011, sammelt Spenden für den Neubau.
               </p>
             </div>
 
@@ -536,7 +519,7 @@ const quellen: Quelle[] = [
                 Untereuerheim liegt 223 Meter über dem Meer am rechten Mainufer, zwischen Schweinfurt im Westen und Haßfurt im Osten. Die Gemarkung misst 5,48 Quadratkilometer.
               </p>
               <p>
-                Südlich des Ortes verläuft in Ost-West-Richtung die Bundesautobahn A 70 zwischen den Anschlussstellen Schonungen und Haßfurt. Das Teilstück zwischen Ober- und Untereuerheim wurde 1992 freigegeben. Nördlich verläuft, ebenfalls in Ost-West-Richtung, die Bundesstraße B 303. Die Staatsstraße St 2277 führt westwärts nach Weyer und südwärts nach Obereuerheim. Über den Mainsteg ist Ottendorf (Gemeinde Gädheim, Landkreis Haßberge) fußläufig erreichbar.
+                Südlich des Ortes verläuft in Ost-West-Richtung die Bundesautobahn A 70 zwischen den Anschlussstellen Schonungen und Haßfurt. Der Abschnitt Schonungen–Haßfurt wurde am 28. Oktober 1992 freigegeben. Nördlich verläuft, ebenfalls in Ost-West-Richtung, die Bundesstraße B 303. Die Staatsstraße St 2277 führt westwärts nach Weyer und südwärts nach Obereuerheim. Über den Mainsteg ist Ottendorf (Gemeinde Gädheim, Landkreis Haßberge) fußläufig erreichbar.
               </p>
             </div>
 
@@ -563,7 +546,7 @@ const quellen: Quelle[] = [
               </div>
               <div class="flex flex-col gap-1">
                 <dt class="text-[11px] uppercase tracking-[0.22em] text-[color:var(--color-muted)]">Einwohner</dt>
-                <dd class="font-serif text-xl text-[color:var(--color-ink)]">~ 780</dd>
+                <dd class="font-serif text-xl text-[color:var(--color-ink)]">786 <span class="text-[12px] text-[color:var(--color-muted)]">(2020)</span></dd>
               </div>
             </dl>
           </div>
@@ -613,22 +596,22 @@ const quellen: Quelle[] = [
         <div class="grid grid-cols-1 gap-x-12 gap-y-10 lg:grid-cols-12">
           <aside class="lg:col-span-4">
             <p class="font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">
-              Tafel X &nbsp;·&nbsp; Apparat
+              Tafel X &nbsp;·&nbsp; Belege
             </p>
             <div class="numeral-anchor mt-8 text-[clamp(5.5rem,12vw,9rem)]">
               {quellen.length}
             </div>
             <p class="marginalia mt-6 max-w-[20ch]">
-              Öffentliche Quellen. Wikipedia, Bayerisches Landesamt für Denkmalpflege, baumkunde.de, die Vereine vor Ort.
+              Wikipedia, Bayerisches Landesamt für Denkmalpflege, baumkunde.de und die Vereine vor Ort.
             </p>
           </aside>
 
           <div class="lg:col-span-8">
             <h2 class="font-serif text-[clamp(2rem,3.6vw,3rem)] leading-[1.05] tracking-tight">
-              Quellen und Apparat.
+              Quellen.
             </h2>
             <p class="mt-8 max-w-2xl text-[15px] leading-relaxed text-[color:var(--color-ink-soft)]">
-              Alles, was diese Seite festhält, ist anderswo nachzulesen. Hier die Bezugsstellen.
+              Alles auf dieser Seite ist anderswo nachzulesen. Hier die Bezugsstellen.
             </p>
 
             <ol class="mt-10 rule-top">

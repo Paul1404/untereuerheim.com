@@ -8,15 +8,38 @@ const CACHE_LONG = "public, max-age=31536000, immutable";
 const CACHE_DAY = "public, max-age=86400";
 const CACHE_NONE = "no-cache";
 
-const headersFor = (pathname: string): HeadersInit | undefined => {
-  if (pathname.startsWith("/_astro/")) return { "cache-control": CACHE_LONG };
-  if (/\.(woff2?|ico|svg|webp|jpg|jpeg|png|gif|webmanifest)$/i.test(pathname)) {
-    return { "cache-control": CACHE_DAY };
+// Baseline security headers sent on every response. Inline scripts and styles
+// are allowed because Astro inlines small page scripts and critical CSS at
+// build time; this is a static brochure site with no user input, so the
+// remaining value is framing, base-uri, object and transport hardening.
+const SECURITY_HEADERS: Record<string, string> = {
+  "content-security-policy": [
+    "default-src 'self'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "object-src 'none'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "style-src 'self' 'unsafe-inline'",
+    "script-src 'self' 'unsafe-inline'",
+    "connect-src 'self'",
+    "upgrade-insecure-requests",
+  ].join("; "),
+  "x-content-type-options": "nosniff",
+  "x-frame-options": "DENY",
+  "referrer-policy": "strict-origin-when-cross-origin",
+  "permissions-policy": "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+  "strict-transport-security": "max-age=31536000; includeSubDomains",
+};
+
+const headersFor = (pathname: string): HeadersInit => {
+  let cache = CACHE_NONE;
+  if (pathname.startsWith("/_astro/")) cache = CACHE_LONG;
+  else if (/\.(woff2?|ico|svg|webp|jpg|jpeg|png|gif|webmanifest)$/i.test(pathname)) {
+    cache = CACHE_DAY;
   }
-  if (/\.html?$/i.test(pathname) || pathname === "/" || !pathname.includes(".")) {
-    return { "cache-control": CACHE_NONE };
-  }
-  return undefined;
+  return { ...SECURITY_HEADERS, "cache-control": cache };
 };
 
 const tryFile = async (path: string) => {
@@ -55,10 +78,17 @@ Bun.serve({
     if (notFound) {
       return new Response(notFound, {
         status: 404,
-        headers: { "content-type": "text/html; charset=utf-8" },
+        headers: {
+          ...SECURITY_HEADERS,
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": CACHE_NONE,
+        },
       });
     }
-    return new Response("Not Found", { status: 404 });
+    return new Response("Not Found", {
+      status: 404,
+      headers: { ...SECURITY_HEADERS, "cache-control": CACHE_NONE },
+    });
   },
 });
 

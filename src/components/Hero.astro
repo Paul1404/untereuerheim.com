@@ -1,15 +1,28 @@
 ---
-// Real photography placeholder. When a hero image is added later, import it
-// from `~/assets/images/` and pass to <Figure src={hero} ... /> below the text
-// block, or wrap the whole hero in a background <Image> layer.
+import { Image } from "astro:assets";
+import luftbild from "../assets/images/luftbild-untereuerheim.jpg";
 ---
-<section class="relative isolate overflow-hidden">
-  <div class="mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-between px-6 pt-32 pb-12 sm:px-8 sm:pt-40 sm:pb-16">
+<section class="hero relative isolate overflow-hidden">
+  <div class="hero-bg" aria-hidden="true">
+    <Image
+      src={luftbild}
+      alt=""
+      widths={[768, 1280, 1920, 2560]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      class="hero-bg-img"
+    />
+  </div>
+  <div class="hero-veil" aria-hidden="true"></div>
+
+  <div class="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-between px-6 pt-32 pb-12 sm:px-8 sm:pt-40 sm:pb-16">
     <div class="reveal max-w-3xl">
-      <p class="mb-5 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
-        <span class="h-px w-8 bg-[color:var(--color-line-strong)]"></span>
-        Erstmals erwähnt um 800
-      </p>
+      <div class="mb-7 flex items-center justify-between gap-4 border-b border-[color:var(--color-line-strong)] pb-4 font-sans text-[11px] uppercase tracking-[0.26em] text-[color:var(--color-muted)]">
+        <span>Unterfranken · Bayern</span>
+        <span class="hidden sm:inline">Erstmals erwähnt um 800</span>
+      </div>
       <h1 class="font-serif text-[clamp(3.25rem,9vw,7.5rem)] leading-[0.95] tracking-[-0.02em] text-[color:var(--color-ink)]">
         Untereuer<span class="italic text-[color:var(--color-sandstone)]">heim</span>
       </h1>
@@ -22,7 +35,7 @@
     </div>
 
     <div class="reveal mt-16 flex items-end justify-between gap-6">
-      <dl class="grid grid-cols-2 gap-x-10 gap-y-3 text-[13px] sm:grid-cols-3">
+      <dl class="grid grid-cols-2 gap-x-10 gap-y-3 text-[13px] sm:grid-cols-4">
         <div>
           <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Lage</dt>
           <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">Am Main</dd>
@@ -34,6 +47,10 @@
         <div class="hidden sm:block">
           <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Landkreis</dt>
           <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">Schweinfurt</dd>
+        </div>
+        <div class="hidden sm:block">
+          <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Koordinate</dt>
+          <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">50,01° N</dd>
         </div>
       </dl>
 
@@ -52,5 +69,59 @@
     0%   { transform: translateY(-12px); opacity: 0; }
     50%  { opacity: 1; }
     100% { transform: translateY(48px); opacity: 0; }
+  }
+
+  /* Aerial photograph of the village, washed into the paper so it reads like
+     a pressed image on newsprint rather than a stock hero banner. */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+  }
+
+  .hero-bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 38%;
+    opacity: 0.32;
+    filter: saturate(0.68) contrast(1.02) sepia(0.1);
+    mix-blend-mode: multiply;
+    transform: scale(1.08);
+  }
+
+  /* Fade the photo into paper at the edges and protect the headline side. */
+  .hero-veil {
+    position: absolute;
+    inset: 0;
+    z-index: -10;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, rgb(250 248 245 / 0.72) 0%, rgb(250 248 245 / 0) 26%, rgb(250 248 245 / 0) 50%, rgb(250 248 245 / 0.86) 86%, var(--color-paper) 100%),
+      linear-gradient(90deg, rgb(250 248 245 / 0.82) 0%, rgb(250 248 245 / 0.2) 52%, rgb(250 248 245 / 0) 78%),
+      radial-gradient(120% 90% at 8% 92%, rgb(154 106 61 / 0.06), transparent 60%);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-bg-img {
+        animation: hero-zoom linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100vh;
+        will-change: transform;
+      }
+    }
+  }
+
+  @keyframes hero-zoom {
+    from { transform: scale(1.08) translateY(0); }
+    to   { transform: scale(1.18) translateY(2.5%); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg-img { transform: scale(1.05); }
   }
 </style>

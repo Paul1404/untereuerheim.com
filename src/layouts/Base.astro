@@ -7,12 +7,14 @@ interface Props {
   title?: string;
   description?: string;
   image?: string;
+  noindex?: boolean;
 }
 
 const {
   title = "Untereuerheim. Ortsteil von Grettstadt im Landkreis Schweinfurt.",
   description = "Untereuerheim (PLZ 97508), Ortsteil von Grettstadt im Landkreis Schweinfurt. Am rechten Ufer des Mains zwischen Schweinfurt und Haßfurt. Rund 780 Einwohner. Erstmals urkundlich erwähnt um das Jahr 800. Pfarrei St. Gallus, Schlossmühle, Mainsteg nach Gädheim und Ottendorf.",
   image = "/og.jpg",
+  noindex = false,
 } = Astro.props;
 
 const siteOrigin = Astro.site ?? new URL("/", Astro.url.origin);
@@ -124,6 +126,7 @@ const jsonLd = {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <link rel="canonical" href={canonical} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

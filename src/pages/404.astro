@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+---
+<Base title="Seite nicht gefunden. Untereuerheim." noindex>
+  <Nav />
+  <main id="hauptinhalt" class="relative">
+    <section class="mx-auto flex min-h-[80svh] max-w-6xl flex-col justify-center px-6 pt-32 pb-20 sm:px-8 sm:pt-40">
+      <div class="reveal max-w-2xl">
+        <p class="mb-6 flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
+          <span class="h-px w-8 bg-[color:var(--color-line-strong)]"></span>
+          Fehler 404
+        </p>
+        <h1 class="font-serif text-[clamp(3rem,8vw,6rem)] leading-[0.95] tracking-[-0.02em] text-[color:var(--color-ink)]">
+          Nichts gefunden.
+        </h1>
+        <p class="mt-8 max-w-xl font-serif text-[clamp(1.2rem,2vw,1.5rem)] italic leading-snug text-[color:var(--color-ink-soft)]">
+          Diese Seite gibt es nicht oder sie ist umgezogen.
+        </p>
+        <p class="mt-5 max-w-lg text-[15px] leading-relaxed text-[color:var(--color-muted)]">
+          Zurück zur Startseite oder weiter zum Archiv mit der Ortsgeschichte.
+        </p>
+
+        <div class="mt-10 flex flex-wrap items-center gap-x-8 gap-y-3 text-[14px]">
+          <a href="/" class="link-underline font-serif text-xl italic text-[color:var(--color-sandstone)] transition-colors hover:text-[color:var(--color-ink)]">
+            Zur Startseite
+          </a>
+          <a href="/archiv" class="link-underline font-serif text-xl italic text-[color:var(--color-sandstone)] transition-colors hover:text-[color:var(--color-ink)]">
+            Zum Archiv
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Base>

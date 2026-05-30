@@ -6,6 +6,7 @@ const links = [
   { href: "/archiv", label: "Archiv" },
 ];
 ---
+<div class="reading-progress" aria-hidden="true"></div>
 <header class="fixed inset-x-0 top-0 z-40">
   <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8 sm:py-5">
     <a href="/" class="group flex items-center gap-2.5 text-[color:var(--color-ink)]">
@@ -24,3 +25,32 @@ const links = [
   </div>
   <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-[color:var(--color-paper)]/95 via-[color:var(--color-paper)]/80 to-transparent backdrop-blur-[2px]"></div>
 </header>
+
+<style>
+  /* Reading-progress ribbon, driven by a native scroll timeline. Where scroll
+     timelines are unsupported it stays at zero width and simply isn't seen. */
+  .reading-progress {
+    position: fixed;
+    inset: 0 0 auto 0;
+    height: 2px;
+    z-index: 50;
+    transform-origin: left center;
+    transform: scaleX(0);
+    background: linear-gradient(90deg, var(--color-sandstone), var(--color-wine));
+    pointer-events: none;
+  }
+
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .reading-progress {
+        animation: reading-progress linear both;
+        animation-timeline: scroll(root);
+      }
+    }
+  }
+
+  @keyframes reading-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+</style>

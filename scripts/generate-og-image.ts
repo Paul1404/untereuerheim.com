@@ -6,7 +6,7 @@ const root = resolve(import.meta.dir, "..");
 const publicDir = resolve(root, "public");
 mkdirSync(publicDir, { recursive: true });
 
-const source = resolve(root, "src/assets/images/luftbild-untereuerheim.jpg");
+const source = resolve(root, "src/assets/images/luftbild-untereuerheim.png");
 const out = resolve(publicDir, "og.jpg");
 
 await sharp(source)

@@ -195,6 +195,75 @@ h1, h2, h3, h4 {
   padding-left: 1.25rem;
 }
 
+/* Hero entrance: a one-time choreographed rise on first paint. Each element
+   carries its own --enter-delay, so the eyebrow, headline, lede and stats
+   settle in sequence rather than all at once. */
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+.hero-enter {
+  opacity: 0;
+  animation: hero-enter 900ms cubic-bezier(0.2, 0.6, 0.2, 1) both;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/* Headline accent: a sandstone hairline draws itself under the village name
+   once the hero has settled. */
+.headline-word {
+  position: relative;
+  display: inline-block;
+}
+.headline-word::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.04em;
+  height: clamp(2px, 0.045em, 5px);
+  border-radius: 9999px;
+  background: linear-gradient(90deg, var(--color-sandstone), var(--color-sandstone-soft));
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: headline-underline 900ms cubic-bezier(0.2, 0.6, 0.2, 1) 1050ms both;
+}
+@keyframes headline-underline {
+  to { transform: scaleX(1); }
+}
+
+/* Oversized faint numerals seated behind each section heading. Tie into the
+   Eins / Zwei / Drei eyebrow labels for a magazine feel. */
+.ghost-numeral {
+  position: absolute;
+  z-index: -1;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 0.8;
+  letter-spacing: -0.05em;
+  color: var(--color-sandstone);
+  opacity: 0.1;
+  font-variant-numeric: lining-nums;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Editorial figures lift on hover: the photo eases up a hair while the frame
+   warms to a sandstone ring. Composes with parallax because the zoom lives on
+   a wrapper, not the image itself. */
+.figure-zoom {
+  transition: transform 700ms cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.group:hover .figure-zoom {
+  transform: scale(1.03);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-enter { opacity: 1; transform: none; animation: none; }
+  .headline-word::after { animation: none; transform: scaleX(1); }
+  .figure-zoom,
+  .group:hover .figure-zoom { transform: none; transition: none; }
+}
+
 /* Scroll-driven parallax for large editorial photographs.
    Native CSS scroll timelines, applied only where supported and when motion
    is welcome. The image is slightly oversized so the drift never reveals an

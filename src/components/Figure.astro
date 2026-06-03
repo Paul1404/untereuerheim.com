@@ -18,27 +18,29 @@ const {
   class: className = "",
 } = Astro.props;
 ---
-<figure class={`relative ${className}`}>
+<figure class={`group relative ${className}`}>
   <div
-    class="relative w-full overflow-hidden rounded-2xl ring-1 ring-[color:var(--color-line-strong)]"
+    class="relative w-full overflow-hidden rounded-2xl ring-1 ring-[color:var(--color-line-strong)] transition duration-500 group-hover:shadow-[var(--shadow-soft)] group-hover:ring-[color:var(--color-sandstone-soft)]"
     style={`aspect-ratio: ${aspect};`}
   >
     {src ? (
-      <Image
-        src={src}
-        alt={alt}
-        widths={[640, 960, 1280, 1920]}
-        sizes="(min-width: 1024px) 720px, 100vw"
-        loading="lazy"
-        decoding="async"
-        class="parallax-media h-full w-full object-cover"
-      />
+      <div class="figure-zoom h-full w-full">
+        <Image
+          src={src}
+          alt={alt}
+          widths={[640, 960, 1280, 1920]}
+          sizes="(min-width: 1024px) 720px, 100vw"
+          loading="lazy"
+          decoding="async"
+          class="parallax-media h-full w-full object-cover"
+        />
+      </div>
     ) : (
       <div class="absolute inset-0 bg-[color:var(--color-paper-2)]"></div>
     )}
   </div>
   {caption && (
-    <figcaption class="mt-3 text-[12px] tracking-wide text-[color:var(--color-muted)]">
+    <figcaption class="mt-3 text-[12px] tracking-wide text-[color:var(--color-muted)] transition-colors group-hover:text-[color:var(--color-ink-soft)]">
       {caption}
     </figcaption>
   )}

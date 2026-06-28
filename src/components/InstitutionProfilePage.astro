@@ -1,0 +1,171 @@
+---
+import { Image } from "astro:assets";
+import Base from "../layouts/Base.astro";
+import Nav from "./Nav.astro";
+import Footer from "./Footer.astro";
+import { getInstitutionPath, type Institution } from "../data/institutionen";
+
+interface Props {
+  inst: Institution;
+}
+
+const { inst } = Astro.props;
+const siteOrigin = Astro.site ?? new URL("/", Astro.url.origin);
+const pagePath = getInstitutionPath(inst);
+const pageUrl = new URL(pagePath, siteOrigin).toString();
+const imageUrl = new URL(inst.image.src, siteOrigin).toString();
+const placeId = new URL("#untereuerheim", siteOrigin).toString();
+const websiteId = new URL("#website", siteOrigin).toString();
+const externalId = `${inst.href.replace(/\/$/, "")}#${inst.slug}`;
+
+const sectionLabels: Record<Institution["section"], string> = {
+  vereine: "Vereine",
+  kirche: "Kirche",
+  orte: "Orte",
+  institutionen: "Institutionen",
+};
+
+const entitySchema = {
+  "@type": inst.type,
+  "@id": externalId,
+  name: inst.name,
+  description: inst.description,
+  url: inst.href,
+  image: imageUrl,
+  areaServed: { "@id": placeId },
+  containedInPlace: { "@id": placeId },
+  sameAs: [inst.href],
+  ...(inst.schema ?? {}),
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": pageUrl,
+      url: pageUrl,
+      name: inst.title,
+      description: inst.seoDescription,
+      inLanguage: "de-DE",
+      isPartOf: { "@id": websiteId },
+      about: { "@id": externalId },
+      primaryImageOfPage: {
+        "@type": "ImageObject",
+        url: imageUrl,
+        caption: inst.imageAlt,
+      },
+    },
+    entitySchema,
+    {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Untereuerheim", item: siteOrigin.toString() },
+        { "@type": "ListItem", position: 2, name: "Institutionen", item: new URL("/institutionen/", siteOrigin).toString() },
+        { "@type": "ListItem", position: 3, name: inst.name, item: pageUrl },
+      ],
+    },
+  ],
+};
+---
+<Base title={inst.title} description={inst.seoDescription} image={inst.image.src} imageAlt={inst.imageAlt} structuredData={structuredData}>
+  <Nav />
+  <main id="hauptinhalt">
+    <article class="relative">
+      <div class="mx-auto max-w-6xl px-6 pt-32 pb-20 sm:px-8 sm:pt-44 sm:pb-28">
+        <nav aria-label="Breadcrumb" class="reveal mb-10 text-[13px] text-[color:var(--color-muted)]">
+          <a href="/" class="link-underline hover:text-[color:var(--color-sandstone)]">Untereuerheim</a>
+          <span aria-hidden="true" class="mx-2">/</span>
+          <a href="/institutionen/" class="link-underline hover:text-[color:var(--color-sandstone)]">Institutionen</a>
+          <span aria-hidden="true" class="mx-2">/</span>
+          <span>{inst.name}</span>
+        </nav>
+
+        <div class="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-start">
+          <header class="reveal lg:col-span-7">
+            <p class="mb-6 inline-flex items-center gap-3 font-sans text-[11px] uppercase tracking-[0.32em] text-[color:var(--color-muted)]">
+              <span class="h-px w-10 bg-[color:var(--color-line-strong)]"></span>
+              {sectionLabels[inst.section]}
+            </p>
+            <h1 class="font-serif text-[clamp(3rem,7vw,6.8rem)] leading-[0.9] tracking-[-0.025em] text-[color:var(--color-ink)]">
+              {inst.name}<span class="text-[color:var(--color-sandstone)]">.</span>
+            </h1>
+            <p class="mt-8 max-w-2xl font-serif text-[clamp(1.2rem,2vw,1.55rem)] italic leading-[1.3] text-[color:var(--color-ink-soft)]">
+              {inst.meta}
+            </p>
+            <div class="mt-10 space-y-6 text-[16px] leading-[1.78] text-[color:var(--color-ink-soft)] sm:text-[17px]">
+              <p class="dropcap">{inst.profile}</p>
+              <p>{inst.description}</p>
+            </div>
+            <div class="mt-10 flex flex-wrap gap-4">
+              <a
+                href={inst.href}
+                rel="external noopener"
+                target="_blank"
+                class="inline-flex items-center gap-2 rounded-md bg-[color:var(--color-ink)] px-4 py-3 text-[14px] text-[color:var(--color-paper)] transition-colors hover:bg-[color:var(--color-sandstone)]"
+              >
+                Offizielle Website
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 17 17 7"/>
+                  <path d="M8 7h9v9"/>
+                </svg>
+              </a>
+              <a
+                href="/institutionen/"
+                class="inline-flex items-center rounded-md border border-[color:var(--color-line-strong)] px-4 py-3 text-[14px] text-[color:var(--color-ink-soft)] transition-colors hover:border-[color:var(--color-sandstone)] hover:text-[color:var(--color-sandstone)]"
+              >
+                Alle Institutionen
+              </a>
+            </div>
+          </header>
+
+          <aside class="reveal lg:col-span-5">
+            <figure class="overflow-hidden rounded-2xl bg-[color:var(--color-paper-2)] ring-1 ring-[color:var(--color-line)]">
+              <Image
+                src={inst.image}
+                alt={inst.imageAlt}
+                widths={[640, 960, 1280, 1600]}
+                sizes="(min-width: 1024px) 460px, 100vw"
+                loading="eager"
+                decoding="async"
+                class="aspect-[4/3] w-full object-cover"
+              />
+              <figcaption class="px-5 py-4 text-[13px] leading-relaxed text-[color:var(--color-muted)]">
+                {inst.imageAlt}
+              </figcaption>
+            </figure>
+
+            <dl class="mt-8 divide-y divide-[color:var(--color-line)] border-y border-[color:var(--color-line)]">
+              {inst.facts.map((fact) => (
+                <div class="grid grid-cols-[7rem_1fr] gap-4 py-4 text-[14px]">
+                  <dt class="text-[color:var(--color-muted)]">{fact.label}</dt>
+                  <dd class="text-[color:var(--color-ink-soft)]">{fact.value}</dd>
+                </div>
+              ))}
+              <div class="grid grid-cols-[7rem_1fr] gap-4 py-4 text-[14px]">
+                <dt class="text-[color:var(--color-muted)]">Website</dt>
+                <dd>
+                  <a href={inst.href} rel="external noopener" target="_blank" class="link-underline break-all text-[color:var(--color-sandstone)]">
+                    {inst.hrefLabel}
+                  </a>
+                </dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+
+        <section class="reveal mt-24 border-t border-[color:var(--color-line)] pt-10">
+          <h2 class="font-serif text-3xl leading-tight">Relevante Suchbegriffe</h2>
+          <ul class="mt-6 flex flex-wrap gap-3">
+            {inst.relatedSearches.map((term) => (
+              <li class="rounded-md bg-[color:var(--color-paper-2)] px-3 py-2 text-[13px] text-[color:var(--color-ink-soft)] ring-1 ring-[color:var(--color-line)]">
+                {term}
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Base>

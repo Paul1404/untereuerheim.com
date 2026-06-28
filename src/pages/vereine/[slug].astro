@@ -1,0 +1,13 @@
+---
+import InstitutionProfilePage from "../../components/InstitutionProfilePage.astro";
+import { institutionen } from "../../data/institutionen";
+
+export function getStaticPaths() {
+  return institutionen
+    .filter((inst) => inst.section === "vereine")
+    .map((inst) => ({ params: { slug: inst.slug }, props: { inst } }));
+}
+
+const { inst } = Astro.props;
+---
+<InstitutionProfilePage inst={inst} />

@@ -1,79 +1,6 @@
 ---
 import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
-import instSv from "../assets/images/inst-sv.jpg";
-import instSchlossmuehle from "../assets/images/inst-schlossmuehle.jpg";
-import instStGallus from "../assets/images/inst-st-gallus.jpg";
-import instMainsteg from "../assets/images/mainsteg-untereuerheim.jpg";
-import instBuecherei from "../assets/images/katholische-buecherei-uheim.jpeg";
-import instKriegerdenkmal from "../assets/images/kriegerdenkmal-uheim.jpeg";
-
-type Inst = {
-  name: string;
-  meta: string;
-  description: string;
-  href: string;
-  hrefLabel: string;
-  image: ImageMetadata;
-  imageAlt: string;
-};
-
-const institutionen: Inst[] = [
-  {
-    name: "SV 1945 Untereuerheim",
-    meta: "Sportverein. Gegründet 1945.",
-    description: "Sportverein mit Abteilungen für Fußball, Gymnastik und Tischtennis. Vereinsheim und Sommerfest am Eurumer Waldspielplatz.",
-    href: "https://sv-untereuerheim.de",
-    hrefLabel: "sv-untereuerheim.de",
-    image: instSv,
-    imageAlt: "Eingang zum Eurumer Waldspielplatz mit Biergarten des SV Untereuerheim.",
-  },
-  {
-    name: "Schlossmühle Untereuerheim",
-    meta: "In Betrieb seit dem 16. Jahrhundert.",
-    description: "Eine der ältesten arbeitenden Mühlen der Region. Verkauf von Mehl, Schrot und regionalen Erzeugnissen direkt ab Hof.",
-    href: "https://schlossmuehle-untereuerheim.de",
-    hrefLabel: "schlossmuehle-untereuerheim.de",
-    image: instSchlossmuehle,
-    imageAlt: "Die Schlossmühle Untereuerheim, ein Fachwerkbau mit rotem Ziegeldach.",
-  },
-  {
-    name: "St. Gallus",
-    meta: "Kuratiekirche, Bistum Würzburg.",
-    description: "Kuratie der Pfarreiengemeinschaft St. Christophorus im Mainbogen. Julius-Echter-Turm um 1600, neugotisches Langhaus aus der zweiten Hälfte des 19. Jahrhunderts, Taufstein 1592. Jährliche Wallfahrt nach Dettelbach.",
-    href: "https://st-gallus-st-laurentius.com",
-    hrefLabel: "st-gallus-st-laurentius.com",
-    image: instStGallus,
-    imageAlt: "Die Pfarrkirche St. Gallus mit ihrem spitzen Kirchturm und das Wegkreuz davor.",
-  },
-  {
-    name: "KÖB Untereuerheim",
-    meta: "Katholische Öffentliche Bücherei.",
-    description: "Ehrenamtlich geführte Bücherei der Pfarrei mit Romanen, Kinder- und Sachbüchern. Ausleihe kostenlos.",
-    href: "http://www.koeb.untereuerheim.de",
-    hrefLabel: "koeb.untereuerheim.de",
-    image: instBuecherei,
-    imageAlt: "Eingangsschild der Katholischen Öffentlichen Bücherei Untereuerheim.",
-  },
-  {
-    name: "Mainbrückenverein Untereuerheim",
-    meta: "Gegründet 2011. Trägerverein der Mainquerung.",
-    description: "Setzt sich für den Erhalt der historischen Mainquerung von Untereuerheim nach Gädheim und Ottendorf ein. Urkundlich als Fähre seit 1384 belegt, ab 1967 als Steg. Sammelt Spenden für die Zukunft der Mainquerung.",
-    href: "https://www.mainbrueckenvereinuntereuerheim.de",
-    hrefLabel: "mainbrueckenvereinuntereuerheim.de",
-    image: instMainsteg,
-    imageAlt: "Der Mainsteg bei Untereuerheim, eine schlanke Bogenbrücke über den Main.",
-  },
-  {
-    name: "Kriegerdenkmal",
-    meta: "Gedenkort für die Gefallenen.",
-    description: "Denkmal zum Gedenken an die Gefallenen der beiden Weltkriege. Namen und Geschichte dokumentiert auf denkmalprojekt.org.",
-    href: "http://www.denkmalprojekt.org/2017/untereuerheim_gde_grettstad_lk-schweinfurt_bay.html",
-    hrefLabel: "denkmalprojekt.org",
-    image: instKriegerdenkmal,
-    imageAlt: "Das Kriegerdenkmal in Untereuerheim mit den Namen der Gefallenen.",
-  },
-];
+import { getInstitutionPath, institutionen } from "../data/institutionen";
 ---
 <section id="institutionen" class="relative scroll-mt-24 py-28 sm:py-36">
   <div class="mx-auto max-w-6xl px-6 sm:px-8">
@@ -93,9 +20,7 @@ const institutionen: Inst[] = [
     <div class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3">
       {institutionen.map((inst) => (
         <a
-          href={inst.href}
-          rel="external noopener"
-          target="_blank"
+          href={getInstitutionPath(inst)}
           class="reveal group relative flex flex-col overflow-hidden rounded-2xl bg-[color:var(--color-paper-2)]/85 ring-1 ring-[color:var(--color-line)] transition-all duration-500 hover:-translate-y-1 hover:bg-[color:var(--color-paper-2)] hover:shadow-[var(--shadow-soft)] hover:ring-[color:var(--color-line-strong)]"
         >
           <div class="relative aspect-[4/3] w-full overflow-hidden">
@@ -116,7 +41,7 @@ const institutionen: Inst[] = [
             <p class="mt-5 text-[15px] leading-relaxed text-[color:var(--color-ink-soft)]">{inst.description}</p>
 
             <span class="mt-8 inline-flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-[color:var(--color-sandstone)]">
-              <span class="link-underline break-all">{inst.hrefLabel}</span>
+              <span class="link-underline break-all">Lokales Profil ansehen</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="shrink-0 transition-transform group-hover:translate-x-0.5" aria-hidden="true">
                 <path d="M7 17 17 7"/>
                 <path d="M8 7h9v9"/>

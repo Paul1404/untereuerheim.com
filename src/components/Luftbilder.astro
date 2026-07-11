@@ -1,0 +1,68 @@
+---
+import Figure from "./Figure.astro";
+import panorama from "../assets/images/luftbild-panorama.jpg";
+import ortsmitte from "../assets/images/luftbild-ortsmitte.jpg";
+import talbruecke from "../assets/images/luftbild-talbruecke.jpg";
+import feldflur from "../assets/images/luftbild-feldflur.jpg";
+import altort from "../assets/images/luftbild-altort.jpg";
+
+const grid = [
+  {
+    src: ortsmitte,
+    alt: "Luftaufnahme der dicht bebauten Ortsmitte von Untereuerheim mit der Pfarrkirche St. Gallus im Zentrum.",
+    caption: "Die dicht bebaute Ortsmitte mit der Pfarrkirche St. Gallus.",
+  },
+  {
+    src: talbruecke,
+    alt: "Luftbild von Untereuerheim mit Blick über die Dächer bis zu einer Talbrücke im Hintergrund.",
+    caption: "Weiter Blick über den Ort, im Hintergrund die Talbrücke.",
+  },
+  {
+    src: feldflur,
+    alt: "Luftbild von Untereuerheim zwischen Feldern und Waldrand.",
+    caption: "Der Ort, eingebettet zwischen Feldern und Wald.",
+  },
+  {
+    src: altort,
+    alt: "Luftbild über die Ziegeldächer des Altorts von Untereuerheim.",
+    caption: "Über den Ziegeldächern des Altorts.",
+  },
+];
+---
+<section id="luftbilder" class="relative scroll-mt-24 py-28 sm:py-36">
+  <div class="mx-auto max-w-6xl px-6 sm:px-8">
+    <div class="reveal relative isolate mx-auto max-w-3xl text-center">
+      <p class="mb-4 font-sans text-[11px] uppercase tracking-[0.28em] text-[color:var(--color-muted)]">
+        Aus der Luft
+      </p>
+      <h2 class="font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl">
+        Untereuerheim von oben.
+      </h2>
+      <p class="mt-5 font-serif text-lg italic text-[color:var(--color-ink-soft)]">
+        Fünf Aufnahmen an einem Sommertag im Juli 2026.
+      </p>
+    </div>
+
+    <div class="reveal mt-16">
+      <Figure
+        src={panorama}
+        alt="Luftbild von Untereuerheim aus größerer Höhe, weiter blauer Sommerhimmel über dem Ort mit der Pfarrkirche St. Gallus."
+        caption="Untereuerheim unter weitem Sommerhimmel."
+        aspect="16 / 9"
+      />
+    </div>
+
+    <div class="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 sm:gap-8 lg:gap-10">
+      {grid.map((photo) => (
+        <div class="reveal">
+          <Figure
+            src={photo.src}
+            alt={photo.alt}
+            caption={photo.caption}
+            aspect="16 / 9"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

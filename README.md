@@ -56,6 +56,7 @@ src/
     Nav.astro           Fixe Kopfzeile + Lesefortschritts-Band (Scroll-Timeline)
     Hero.astro          Vollbild-Luftbild, choreografierter Einstieg, Eckdaten
     DerOrt.astro        Faktentabelle + redaktionelle Figuren
+    Luftbilder.astro    Galerie der Drohnenaufnahmen (ein großes Bild + Raster)
     Chronik.astro       Zeitstrahl aus der Content Collection, Zählanimation
     Institutionen.astro Datengetriebene Karten (Verein, Mühle, Kirche, Mainsteg ...)
     Figure.astro        Wiederverwendbare Bildfigur mit Zoom/Parallax/Ring

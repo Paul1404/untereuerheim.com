@@ -7,8 +7,8 @@ const links = [
 ];
 ---
 <div class="reading-progress" aria-hidden="true"></div>
-<header class="fixed inset-x-0 top-0 z-40">
-  <div class="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8 sm:py-5">
+<header class="fixed inset-x-0 top-0 z-40 px-3 pt-3 sm:px-5 sm:pt-4">
+  <div class="nav-shell mx-auto flex max-w-6xl items-center justify-between rounded-full border border-white/45 bg-[color:var(--color-paper)]/78 px-4 py-2.5 shadow-[0_8px_30px_-18px_rgb(31_27_22/.4)] backdrop-blur-xl sm:px-5">
     <a href="/" class="group flex items-center gap-2.5 text-[color:var(--color-ink)]">
       <span class="inline-flex h-7 w-7 items-center justify-center rounded-md bg-[color:var(--color-sandstone)] font-serif text-[15px] italic leading-none text-[color:var(--color-paper)] shadow-[var(--shadow-soft)]">U</span>
       <span class="font-serif text-[15px] tracking-wide">Untereuerheim</span>
@@ -22,8 +22,17 @@ const links = [
         ))}
       </ul>
     </nav>
+    <details class="mobile-menu relative md:hidden">
+      <summary class="flex h-8 w-8 cursor-pointer list-none items-center justify-center rounded-full border border-[color:var(--color-line-strong)] text-[color:var(--color-ink)]" aria-label="Menü öffnen">
+        <span class="menu-lines" aria-hidden="true"></span>
+      </summary>
+      <nav aria-label="Mobile Navigation" class="absolute right-0 top-11 min-w-52 overflow-hidden rounded-2xl border border-[color:var(--color-line)] bg-[color:var(--color-paper)]/95 p-2 shadow-[var(--shadow-card)] backdrop-blur-xl">
+        <ul class="flex flex-col text-[14px] text-[color:var(--color-ink-soft)]">
+          {links.map((l, i) => <li><a href={l.href} class="flex items-center justify-between rounded-xl px-4 py-3 transition-colors hover:bg-[color:var(--color-paper-2)] hover:text-[color:var(--color-sandstone)]"><span>{l.label}</span><span class="text-[10px] text-[color:var(--color-muted)]">0{i + 1}</span></a></li>)}
+        </ul>
+      </nav>
+    </details>
   </div>
-  <div class="pointer-events-none absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-[color:var(--color-paper)]/95 via-[color:var(--color-paper)]/80 to-transparent backdrop-blur-[2px]"></div>
 </header>
 
 <style>
@@ -53,4 +62,15 @@ const links = [
     from { transform: scaleX(0); }
     to   { transform: scaleX(1); }
   }
+  .menu-lines,
+  .menu-lines::before,
+  .menu-lines::after { display:block; width:14px; height:1px; background:currentColor; transition:transform 250ms ease; }
+  .menu-lines { position:relative; }
+  .menu-lines::before, .menu-lines::after { content:""; position:absolute; left:0; }
+  .menu-lines::before { top:-4px; }
+  .menu-lines::after { top:4px; }
+  details[open] .menu-lines { background:transparent; }
+  details[open] .menu-lines::before { top:0; transform:rotate(45deg); }
+  details[open] .menu-lines::after { top:0; transform:rotate(-45deg); }
+  summary::-webkit-details-marker { display:none; }
 </style>

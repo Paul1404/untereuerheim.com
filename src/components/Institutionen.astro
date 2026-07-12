@@ -21,7 +21,7 @@ import { getInstitutionPath, institutionen } from "../data/institutionen";
       {institutionen.map((inst) => (
         <a
           href={getInstitutionPath(inst)}
-          class="reveal group relative flex flex-col overflow-hidden rounded-2xl bg-[color:var(--color-paper-2)]/85 ring-1 ring-[color:var(--color-line)] transition-all duration-500 hover:-translate-y-1 hover:bg-[color:var(--color-paper-2)] hover:shadow-[var(--shadow-soft)] hover:ring-[color:var(--color-line-strong)]"
+          class="reveal group relative flex flex-col overflow-hidden rounded-[1.35rem] bg-[color:var(--color-paper-2)]/85 ring-1 ring-[color:var(--color-line)] transition-all duration-500 hover:-translate-y-1.5 hover:bg-[color:var(--color-paper-2)] hover:shadow-[var(--shadow-card)] hover:ring-[color:var(--color-sandstone-soft)]"
         >
           <div class="relative aspect-[4/3] w-full overflow-hidden">
             <Image
@@ -33,6 +33,10 @@ import { getInstitutionPath, institutionen } from "../data/institutionen";
               decoding="async"
               class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
             />
+            <div class="absolute inset-0 bg-gradient-to-t from-[color:var(--color-ink)]/20 via-transparent to-transparent opacity-60 transition-opacity group-hover:opacity-30"></div>
+            <span class="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-full border border-white/45 bg-[color:var(--color-paper)]/75 text-[color:var(--color-sandstone)] shadow-sm backdrop-blur-md transition-transform duration-500 group-hover:rotate-45">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 17 17 7M8 7h9v9"/></svg>
+            </span>
           </div>
 
           <div class="flex flex-1 flex-col p-7">

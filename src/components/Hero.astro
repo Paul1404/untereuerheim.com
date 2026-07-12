@@ -16,9 +16,10 @@ import luftbild from "../assets/images/luftbild-ortsmitte.jpg";
     />
   </div>
   <div class="hero-veil" aria-hidden="true"></div>
+  <svg class="hero-contour" viewBox="0 0 500 500" aria-hidden="true"><path d="M-20 330C72 257 146 385 239 302s147-45 281-160M-30 375c95-70 170 47 267-22s165-79 299-164M-20 420c111-63 169 24 273-38s171-101 303-147" fill="none" stroke="currentColor"/></svg>
 
   <div class="relative mx-auto flex min-h-[100svh] max-w-6xl flex-col justify-between px-6 pt-32 pb-12 sm:px-8 sm:pt-40 sm:pb-16">
-    <div class="max-w-3xl">
+    <div class="max-w-[52rem]">
       <div class="hero-enter mb-7 flex items-center justify-between gap-4 border-b border-[color:var(--color-line-strong)] pb-4 font-sans text-[11px] uppercase tracking-[0.26em] text-[color:var(--color-muted)]" style="--enter-delay:80ms">
         <span>Unterfranken · Bayern</span>
         <span class="hidden sm:inline">Erstmals erwähnt um 800</span>
@@ -35,7 +36,7 @@ import luftbild from "../assets/images/luftbild-ortsmitte.jpg";
     </div>
 
     <div class="mt-16 flex items-end justify-between gap-6">
-      <dl class="hero-enter grid grid-cols-2 gap-x-10 gap-y-3 text-[13px] sm:grid-cols-4" style="--enter-delay:620ms">
+      <dl class="hero-enter grid grid-cols-2 gap-x-8 gap-y-5 rounded-2xl border border-white/40 bg-[color:var(--color-paper)]/58 p-4 text-[13px] shadow-[var(--shadow-soft)] backdrop-blur-md sm:grid-cols-4 sm:px-6 sm:py-5" style="--enter-delay:620ms">
         <div>
           <dt class="text-[11px] uppercase tracking-[0.2em] text-[color:var(--color-muted)]">Lage</dt>
           <dd class="mt-1 font-serif text-lg text-[color:var(--color-ink)]">Am Main</dd>
@@ -104,6 +105,7 @@ import luftbild from "../assets/images/luftbild-ortsmitte.jpg";
       linear-gradient(90deg, rgb(250 248 245 / 0.82) 0%, rgb(250 248 245 / 0.2) 52%, rgb(250 248 245 / 0) 78%),
       radial-gradient(120% 90% at 8% 92%, rgb(154 106 61 / 0.06), transparent 60%);
   }
+  .hero-contour { position:absolute; right:-5rem; bottom:-7rem; z-index:-5; width:min(48vw,42rem); color:var(--color-sandstone); opacity:.13; transform:rotate(-8deg); pointer-events:none; }
 
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {

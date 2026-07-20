@@ -26,6 +26,6 @@
     "@astrojs/check": "^0.9.9",
     "@types/bun": "latest",
     "sharp": "^0.35.3",
-    "typescript": "^6.0.3"
+    "typescript": "^7.0.2"
   }
 }

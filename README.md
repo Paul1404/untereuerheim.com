@@ -36,7 +36,7 @@ Gestalterische Leitidee: eine gedruckte Ortschronik, ins Web übersetzt. Serifen
 | CI | GitHub Actions | | `bun run check` + `bun run build` bei jedem PR und Push auf `main`. |
 | Deploy | Docker auf [Railway](https://railway.com) | | Mehrstufiges Dockerfile, Healthcheck auf `/health.json`. |
 
-Bewusst **nicht** im Einsatz: kein React/Vue/Svelte im Client, kein CSS-in-JS, kein Tailwind-Config-File, kein externer Font- oder Analytics-Dienst, keine Laufzeit-Datenquelle.
+Bewusst **nicht** im Einsatz: kein React/Vue/Svelte im Client, kein CSS-in-JS, kein Tailwind-Config-File, kein externer Font-Dienst, keine Laufzeit-Datenquelle. Die cookielose Reichweitenmessung und stichprobenartige, maskierte Sitzungsaufzeichnung laufen über die selbst betriebene Umami-Instanz unter `umami.pdcd.net`.
 
 ---
 

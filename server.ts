@@ -1,4 +1,5 @@
 import { join } from "node:path";
+import { isOriginAuthorized } from "./server-origin-auth";
 
 const DIST = join(import.meta.dir, "dist");
 const PORT = Number(process.env.PORT) || 4321;
@@ -68,6 +69,13 @@ Bun.serve({
   async fetch(req) {
     const url = new URL(req.url);
     const pathname = decodeURIComponent(url.pathname);
+
+    if (!isOriginAuthorized(req, pathname)) {
+      return new Response("Forbidden", {
+        status: 403,
+        headers: { ...SECURITY_HEADERS, "cache-control": CACHE_NONE },
+      });
+    }
 
     const file = await resolve(pathname);
     if (file) {

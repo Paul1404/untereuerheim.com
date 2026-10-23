@@ -39,6 +39,11 @@ It uses Astro, Tailwind CSS, Bun, static HTML output, a small Bun server, Docker
 
 ## Verification
 
+`main` requires a pull request with the `check` (GitHub Actions) and
+`GitGuardian Security Checks` checks passing on an up-to-date branch. This also
+applies to administrators; no second-person approval is required. Do not bypass
+or temporarily disable protection to ship a change.
+
 Run the relevant checks and exercise the affected workflow, endpoint, or generated artifact.
 State clearly when authenticated, database, deployment, or live verification was not possible.
 

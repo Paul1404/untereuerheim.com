@@ -29,9 +29,20 @@ It uses Astro, Tailwind CSS, Bun, static HTML output, a small Bun server, Docker
 
 - `bun run check`: Astro validation
 - `bun run test`: tests
+- `bun run test` builds the site first, then exercises the real Bun server:
+  internal pages, referenced assets (including CSS fonts and responsive images),
+  missing-page responses, caching, and origin access protection.
+- `SMOKE_ORIGIN_SECRET=<test secret> bun run test:smoke -- <base URL>` runs the
+  same read-only checks against an already running test server. CI runs it
+  against the production Docker image with an isolated test origin secret.
 - `bun run build`: production build
 
 ## Verification
+
+`main` requires a pull request with the `check` (GitHub Actions) and
+`GitGuardian Security Checks` checks passing on an up-to-date branch. This also
+applies to administrators; no second-person approval is required. Do not bypass
+or temporarily disable protection to ship a change.
 
 Run the relevant checks and exercise the affected workflow, endpoint, or generated artifact.
 State clearly when authenticated, database, deployment, or live verification was not possible.

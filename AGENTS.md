@@ -29,6 +29,12 @@ It uses Astro, Tailwind CSS, Bun, static HTML output, a small Bun server, Docker
 
 - `bun run check`: Astro validation
 - `bun run test`: tests
+- `bun run test` builds the site first, then exercises the real Bun server:
+  internal pages, referenced assets (including CSS fonts and responsive images),
+  missing-page responses, caching, and origin access protection.
+- `SMOKE_ORIGIN_SECRET=<test secret> bun run test:smoke -- <base URL>` runs the
+  same read-only checks against an already running test server. CI runs it
+  against the production Docker image with an isolated test origin secret.
 - `bun run build`: production build
 
 ## Verification

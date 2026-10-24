@@ -174,21 +174,7 @@ const jsonLd = {
       <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     )}
 
-    <script
-      is:inline
-      defer
-      src="https://umami.pdcd.net/script.js"
-      data-website-id="faee3f01-5f94-47d7-82c6-d833d9c85b83"
-    />
-    <script
-      is:inline
-      defer
-      src="https://umami.pdcd.net/recorder.js"
-      data-website-id="faee3f01-5f94-47d7-82c6-d833d9c85b83"
-      data-sample-rate="0.15"
-      data-mask-level="moderate"
-      data-max-duration="300000"
-    />
+    <script is:inline defer src="/analytics-consent.js" data-website-id="faee3f01-5f94-47d7-82c6-d833d9c85b83" data-hosts="untereuerheim.com,www.untereuerheim.com" data-privacy="/datenschutz" />
   </head>
   <body class="min-h-screen antialiased">
     <a

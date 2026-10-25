@@ -69,3 +69,22 @@ CI runs `bun audit` against the committed lockfile, including the build
 dependencies used to generate the published site.
 Do not replace the lockfile audit with an empty Dependabot PR queue or suppress
 an advisory merely to make the gate pass.
+
+## Main-only branch lifecycle and security reporting
+
+`main` is the only retained local and remote branch for this active Railway
+repository. Temporary PR branches are allowed only while work is in progress.
+Keep required checks and branch protections; never bypass them to avoid a branch.
+Before finishing, merge validated work, delete the remote and local task branches,
+remove clean worktrees created for the task, and verify that only `main` remains
+with `git ls-remote --heads origin` and `git for-each-ref refs/heads`.
+
+If a task cannot safely merge, preserve commits in a verified Git bundle outside
+the checkout and save staged, unstaged and untracked changes. Detach any retained
+worktree before deleting its task branch, and report the unfinished work and
+recovery location. Never discard unrelated changes, retain an `archive/` branch,
+or modify an archived repository to satisfy cleanup. A later explicit owner
+instruction can retain a branch.
+
+Follow `SECURITY.md` for vulnerability reports. Keep reports private and omit
+credentials, production records and personal data from public issues and commits.

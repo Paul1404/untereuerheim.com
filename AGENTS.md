@@ -98,3 +98,7 @@ Container security builds the production image and scans OS and library packages
 Retain the complete report. Fixable HIGH/CRITICAL findings block delivery;
 upstream-unfixed findings remain visible and require explicit review. Do not add
 blanket scanner ignores or weaken these gates to make a release pass.
+
+Runtime APK security upgrades are keyed to `RAILWAY_GIT_COMMIT_SHA` so a new
+release cannot reuse an outdated package-upgrade layer from Railway build cache.
+Keep the commit build argument in the container scan workflow as well.

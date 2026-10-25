@@ -62,3 +62,10 @@ honors DNT/GPC, excludes query-bearing and authenticated routes, and strips
 individual event data and titles. Server-side strict masking and replay limits
 are owned by web-host-gitops analytics/websites.json. Never rely on recorder
 data-mask-level attributes. Keep the site's privacy notice and providers aligned.
+
+## Dependency audit gate
+
+CI runs `bun audit` against the committed lockfile, including the build
+dependencies used to generate the published site.
+Do not replace the lockfile audit with an empty Dependabot PR queue or suppress
+an advisory merely to make the gate pass.

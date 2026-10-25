@@ -10,7 +10,8 @@ COPY . .
 RUN bun run build
 
 FROM oven/bun:${BUN_VERSION}-alpine AS runner
-RUN apk upgrade --no-cache
+ARG RAILWAY_GIT_COMMIT_SHA=local
+RUN test -n "$RAILWAY_GIT_COMMIT_SHA" && apk upgrade --no-cache
 WORKDIR /app
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0

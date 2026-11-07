@@ -23,19 +23,23 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun audit
       - run: bun run check
-      - run: bun run build
-      - run: bun test
       - name: Build the production image
         run: docker build --tag untereuerheim-smoke .
-      - name: Start the production image with origin protection
+      - name: Prepare the production image with origin protection
         run: >-
-          docker run --detach --name untereuerheim-smoke
+          docker create --name untereuerheim-smoke
           --publish 127.0.0.1:4321:4321
           --env ORIGIN_AUTH_SECRET=isolated-smoke-test-secret
           untereuerheim-smoke
+      - name: Test the built site
+        run: |
+          docker cp untereuerheim-smoke:/app/dist ./dist
+          bun test
+      - name: Start the production image
+        run: docker start untereuerheim-smoke
       - name: Wait for container readiness
         run: >-
-          curl --fail --retry 20 --retry-delay 1 --retry-connrefused
+          curl --fail --retry 20 --retry-delay 1 --retry-all-errors --max-time 2
           --retry-max-time 30 http://127.0.0.1:4321/health.json
       - name: Verify production pages, assets and access protection
         env:

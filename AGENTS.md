@@ -36,6 +36,9 @@ It uses Astro, Tailwind CSS, Bun, static HTML output, a small Bun server, Docker
   same read-only checks against an already running test server. CI runs it
   against the production Docker image with an isolated test origin secret.
 - `bun run build`: production build
+- CI builds the production image once, copies its `dist` for the host tests,
+  and runs that same image for the container smoke. Keep those checks on the
+  image output instead of adding a second site build.
 
 ## Verification
 

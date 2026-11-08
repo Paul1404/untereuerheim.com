@@ -15,7 +15,7 @@ This is the canonical instruction file for this repository. Claude Code loads it
 
 This is the static editorial website for Untereuerheim.
 
-It uses Astro, Tailwind CSS, Bun, static HTML output, a small Bun server, Docker, and Railway. It has no CMS or database.
+It uses Astro, Tailwind CSS, Bun, static HTML output, a small Bun server, Docker, and Vertex RKE2 with Fleet. It has no CMS or database.
 
 ## Project rules
 
@@ -75,7 +75,7 @@ an advisory merely to make the gate pass.
 
 ## Main-only branch lifecycle and security reporting
 
-`main` is the only retained local and remote branch for this active Railway
+`main` is the only retained local and remote branch for this active
 repository. Temporary PR branches are allowed only while work is in progress.
 Keep required checks and branch protections; never bypass them to avoid a branch.
 Before finishing, merge validated work, delete the remote and local task branches,
@@ -94,8 +94,9 @@ credentials, production records and personal data from public issues and commits
 
 ## Production security gates
 
-Railway waits for successful GitHub workflows on `main`. Keep an always-running
-push workflow and do not cancel its main-branch runs. PR branch cleanup never
+Verified main-branch images are published to GHCR after CI and the image scan;
+Vertex Fleet promotes the published image digest. Keep an always-running push
+workflow and do not cancel its main-branch runs. PR branch cleanup never
 justifies bypassing CI. Public repositories also enforce CodeQL results on main.
 Container security builds the production image and scans OS and library packages.
 Retain the complete report. Fixable HIGH/CRITICAL findings block delivery;
@@ -103,5 +104,5 @@ upstream-unfixed findings remain visible and require explicit review. Do not add
 blanket scanner ignores or weaken these gates to make a release pass.
 
 Runtime APK security upgrades are keyed to `RAILWAY_GIT_COMMIT_SHA` so a new
-release cannot reuse an outdated package-upgrade layer from Railway build cache.
+release cannot reuse an outdated package-upgrade layer from the build cache.
 Keep the commit build argument in the container scan workflow as well.

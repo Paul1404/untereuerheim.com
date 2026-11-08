@@ -34,7 +34,7 @@ Gestalterische Leitidee: eine gedruckte Ortschronik, ins Web übersetzt. Serifen
 | Runtime + Paketmanager | [Bun](https://bun.sh) | 1.3.x | Installiert Abhängigkeiten und betreibt den Produktions-Static-Server. |
 | Sprache | TypeScript | 6 | `astro/tsconfigs/strict`, Pfad-Alias `~/*` → `src/*`. |
 | CI | GitHub Actions | | `bun run check` + `bun run build` bei jedem PR und Push auf `main`. |
-| Deploy | Docker auf [Railway](https://railway.com) | | Mehrstufiges Dockerfile, Healthcheck auf `/health.json`. |
+| Deploy | Vertex RKE2 mit Fleet | | Mehrstufiges Dockerfile, Healthcheck auf `/health.json`. |
 
 Bewusst **nicht** im Einsatz: kein React/Vue/Svelte im Client, kein CSS-in-JS, kein Tailwind-Config-File, kein externer Font-Dienst, keine Laufzeit-Datenquelle. Die cookielose Reichweitenmessung und stichprobenartige, maskierte Sitzungsaufzeichnung laufen über die selbst betriebene Umami-Instanz unter `umami.pdcd.net`.
 
@@ -77,7 +77,6 @@ public/                 Unveränderte Assets: Favicons, manifest, robots, health
 scripts/                sharp-Werkzeuge: Icons, OG-Bild, Bildoptimierung
 server.ts               Bun-Static-Server für die Produktion
 Dockerfile              Mehrstufiger Build
-railway.toml            Deploy-Konfiguration
 ```
 
 ### Komposition
@@ -241,7 +240,7 @@ In Produktion liefert ein eigener Bun-Server `dist/` aus. Astros Preview-Server 
 
 **Gestufte Cache-Control.** Gehashte Build-Assets unter `/_astro/` bekommen `immutable` für ein Jahr, statische Medien (Fonts, Bilder, Icons, Manifest) einen Tag, HTML `no-cache`.
 
-Gebunden wird an `HOST` (Default `0.0.0.0`) und `PORT` (Default `4321`). Railway injiziert `PORT` automatisch.
+Gebunden wird an `HOST` (Default `0.0.0.0`) und `PORT` (Default `4321`). In Vertex ist `PORT` auf `4321` gesetzt.
 
 ---
 
@@ -286,9 +285,9 @@ Mehrstufiger Build, damit das Laufzeit-Image klein und ohne Build-Werkzeuge blei
 1. **`builder`** (`oven/bun:alpine`): installiert Abhängigkeiten mit `--frozen-lockfile` und baut die Site.
 2. **`runner`** (`oven/bun:alpine`): kopiert nur `dist/` und `server.ts`, legt einen Nicht-Root-Nutzer `app` an, setzt `NODE_ENV`, `HOST`, `PORT` und startet `bun run server.ts`. Keine `node_modules` zur Laufzeit nötig, weil der Server keine Abhängigkeiten hat.
 
-### Railway
+### Vertex
 
-`railway.toml` legt fest: Build über das Dockerfile, Healthcheck auf `/health.json` (eine statische Datei in `public/`, die immer 200 liefert, sobald der Server steht), `restartPolicyType = ON_FAILURE`. Railway erkennt das Dockerfile automatisch und injiziert `PORT`. Domain wird im Railway-Dashboard verbunden.
+GitHub Actions veröffentlicht das geprüfte Produktionsimage in GHCR. Fleet übernimmt den Image-Digest und betreibt die Website auf Vertex RKE2. CloudFront liefert die öffentliche Domain aus und schützt den Ursprung mit einem Verifizierungsheader. Der Healthcheck verwendet `/health.json`.
 
 ### CI
 
@@ -344,7 +343,7 @@ Siehe `.env.example`. Nur zwei, beide mit Defaults:
 
 | Variable | Default | Zweck |
 |---|---|---|
-| `PORT` | `4321` | HTTP-Port. Railway setzt das automatisch. |
+| `PORT` | `4321` | HTTP-Port des Vertex-Containers. |
 | `HOST` | `0.0.0.0` | Bind-Adresse. In Containern `0.0.0.0`. |
 
 ---

@@ -9,44 +9,20 @@ permissions:
   contents: read
 
 jobs:
-  build-image:
-    name: Build production image
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        with:
-          persist-credentials: false
-      - name: Build the production image
-        run: docker build --pull --build-arg RAILWAY_GIT_COMMIT_SHA=${{ github.sha }} --tag untereuerheim-smoke .
-      - name: Save production image
-        shell: bash
-        run: docker save untereuerheim-smoke | gzip -1 > /tmp/vertex-image.tar.gz
-      - name: Share production image with downstream jobs
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
-        with:
-          name: vertex-image
-          path: /tmp/vertex-image.tar.gz
-          retention-days: 1
-          if-no-files-found: error
-
   image-security:
     name: Production image vulnerability scan
-    needs: build-image
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Download the production image
-        uses: actions/download-artifact@v8
+      - name: Build the production image
+        run: docker build --pull --build-arg RAILWAY_GIT_COMMIT_SHA=${{ github.sha }} --tag untereuerheim-smoke .
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
-          name: vertex-image
-          path: /tmp
-      - name: Load the production image
-        shell: bash
-        run: gunzip -c /tmp/vertex-image.tar.gz | docker load
+          bun-version: 1.3.11
+      - run: bun install --frozen-lockfile
       - name: Scan OS and application packages
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
@@ -71,29 +47,6 @@ jobs:
           if-no-files-found: error
 
 
-  check:
-    needs: build-image
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.3.11
-      - run: bun install --frozen-lockfile
-      - run: bun audit
-      - run: bun run check
-      - name: Download the production image
-        uses: actions/download-artifact@v8
-        with:
-          name: vertex-image
-          path: /tmp
-      - name: Load the production image
-        shell: bash
-        run: gunzip -c /tmp/vertex-image.tar.gz | docker load
       - name: Prepare the production image with origin protection
         run: >-
           docker create --name untereuerheim-smoke
@@ -119,6 +72,36 @@ jobs:
         run: |
           docker logs untereuerheim-smoke || true
           docker rm --force untereuerheim-smoke || true
+
+      - name: Save production image
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        shell: bash
+        run: docker save untereuerheim-smoke | gzip -1 > /tmp/vertex-image.tar.gz
+      - name: Share production image with downstream jobs
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vertex-image
+          path: /tmp/vertex-image.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
+
+
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.3.11
+      - run: bun install --frozen-lockfile
+      - run: bun audit
+      - run: bun run check
 
   publish:
     name: Publish verified production image

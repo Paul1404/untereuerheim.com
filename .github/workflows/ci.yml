@@ -9,7 +9,70 @@ permissions:
   contents: read
 
 jobs:
+  build-image:
+    name: Build production image
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Build the production image
+        run: docker build --pull --build-arg RAILWAY_GIT_COMMIT_SHA=${{ github.sha }} --tag untereuerheim-smoke .
+      - name: Save production image
+        shell: bash
+        run: docker save untereuerheim-smoke | gzip -1 > /tmp/vertex-image.tar.gz
+      - name: Share production image with downstream jobs
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: vertex-image
+          path: /tmp/vertex-image.tar.gz
+          retention-days: 1
+          if-no-files-found: error
+
+  image-security:
+    name: Production image vulnerability scan
+    needs: build-image
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Download the production image
+        uses: actions/download-artifact@v8
+        with:
+          name: vertex-image
+          path: /tmp
+      - name: Load the production image
+        shell: bash
+        run: gunzip -c /tmp/vertex-image.tar.gz | docker load
+      - name: Scan OS and application packages
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          version: v0.76.1
+          image-ref: untereuerheim-smoke
+          scanners: vuln
+          format: json
+          output: image-vulnerabilities.json
+          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          ignore-unfixed: false
+          exit-code: '0'
+          timeout: 10m
+      - name: Block fixable high and critical vulnerabilities
+        run: python3 scripts/check-image-vulnerabilities.py image-vulnerabilities.json
+      - name: Retain the complete vulnerability report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: production-image-vulnerabilities
+          path: image-vulnerabilities.json
+          retention-days: 14
+          if-no-files-found: error
+
+
   check:
+    needs: build-image
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -23,8 +86,14 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun audit
       - run: bun run check
-      - name: Build the production image
-        run: docker build --tag untereuerheim-smoke .
+      - name: Download the production image
+        uses: actions/download-artifact@v8
+        with:
+          name: vertex-image
+          path: /tmp
+      - name: Load the production image
+        shell: bash
+        run: gunzip -c /tmp/vertex-image.tar.gz | docker load
       - name: Prepare the production image with origin protection
         run: >-
           docker create --name untereuerheim-smoke
@@ -50,3 +119,33 @@ jobs:
         run: |
           docker logs untereuerheim-smoke || true
           docker rm --force untereuerheim-smoke || true
+
+  publish:
+    name: Publish verified production image
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [check, image-security]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Download the production image
+        uses: actions/download-artifact@v8
+        with:
+          name: vertex-image
+          path: /tmp
+      - name: Load the production image
+        shell: bash
+        run: gunzip -c /tmp/vertex-image.tar.gz | docker load
+      - name: Publish the tested and scanned image
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REGISTRY_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          current=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if [ "$current" != "$GITHUB_SHA" ]; then echo "Skipping superseded commit"; exit 0; fi
+          image="ghcr.io/paul1404/untereuerheim.com:sha-$GITHUB_SHA"
+          echo "$REGISTRY_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker tag "untereuerheim-smoke" "$image"
+          docker push "$image"

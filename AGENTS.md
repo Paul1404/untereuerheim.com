@@ -98,8 +98,11 @@ Verified main-branch images are published to GHCR after CI and the image scan;
 Vertex Fleet promotes the published image digest. Keep an always-running push
 workflow and do not cancel its main-branch runs. PR branch cleanup never
 justifies bypassing CI. Public repositories also enforce CodeQL results on main.
-Container security builds the production image and scans OS and library packages.
-Retain the complete report. Fixable HIGH/CRITICAL findings block delivery;
+CI builds the production image once and runs its scan and functional checks in
+the same job, alongside separate source checks. It publishes that image only
+after both jobs pass. The scheduled
+container security workflow independently rebuilds and scans. Retain the full
+scan report. Fixable HIGH/CRITICAL findings block delivery;
 upstream-unfixed findings remain visible and require explicit review. Do not add
 blanket scanner ignores or weaken these gates to make a release pass.
 
